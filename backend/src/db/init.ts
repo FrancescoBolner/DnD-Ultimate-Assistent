@@ -1,4 +1,5 @@
 import { pool } from '../config/db';
+import { SEED_INSERTS, TRUNCATE_ORDER } from './seed-data';
 
 const SCHEMA = [
   `CREATE TABLE IF NOT EXISTS \`users\` (
@@ -312,6 +313,26 @@ const SCHEMA = [
   ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci`,
 ];
 
+async function seedDb(): Promise<void> {
+  const conn = await pool.getConnection();
+  try {
+    await conn.query('SET FOREIGN_KEY_CHECKS = 0');
+    for (const table of TRUNCATE_ORDER) {
+      await conn.query(`TRUNCATE TABLE \`${table}\``);
+    }
+    for (const sql of SEED_INSERTS) {
+      await conn.query(sql);
+    }
+    await conn.query('SET FOREIGN_KEY_CHECKS = 1');
+    console.log('✓ Database seeded with local data');
+  } catch (err) {
+    await conn.query('SET FOREIGN_KEY_CHECKS = 1');
+    throw err;
+  } finally {
+    conn.release();
+  }
+}
+
 export async function initDb(): Promise<void> {
   const conn = await pool.getConnection();
   try {
@@ -321,5 +342,10 @@ export async function initDb(): Promise<void> {
     console.log('✓ Database schema initialized');
   } finally {
     conn.release();
+  }
+
+  if (process.env.DB_SEED === 'true') {
+    console.log('DB_SEED=true — seeding database...');
+    await seedDb();
   }
 }
