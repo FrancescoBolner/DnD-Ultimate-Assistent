@@ -11,32 +11,34 @@ const API_BASE = resolveApiBase();
 
 /**
  * Rewrites any http://localhost:PORT or http://127.0.0.1:PORT occurrences in a
- * raw JSON string to use the actual hostname the browser is connected to.
+ * raw JSON string to use the actual backend origin.
  * No-ops when already on localhost (dev machine).
  */
 function rewriteLocalhostInJson(text: string): string {
   const host = window.location.hostname;
   if (host === 'localhost' || host === '127.0.0.1') return text;
   if (!text.includes('localhost') && !text.includes('127.0.0.1')) return text;
+  const backendOrigin = API_BASE.replace(/\/api$/, ''); // e.g. https://dnd-ultimate-assistent.onrender.com
   return text.replace(
     /http:\/\/(localhost|127\.0\.0\.1)(:\d+)?/g,
-    (_match, _h, port) => `http://${host}${port ?? ''}`,
+    () => backendOrigin,
   );
 }
 
 /**
  * Reverse of rewriteLocalhostInJson.
- * Before sending a request body, normalise any network-IP URLs back to
- * localhost so the database always stores canonical localhost URLs.
+ * Before sending a request body, normalise backend-origin URLs back to
+ * canonical localhost so the database always stores localhost URLs.
  * No-ops when already on localhost (dev machine).
  */
 function normalizeBodyUrls(text: string): string {
   const host = window.location.hostname;
   if (host === 'localhost' || host === '127.0.0.1') return text;
-  const escaped = host.replace(/\./g, '\\.');
+  const backendOrigin = API_BASE.replace(/\/api$/, '');
+  const escaped = backendOrigin.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   return text.replace(
-    new RegExp(`http://${escaped}(:\\d+)?`, 'g'),
-    (_match, port) => `http://localhost${port ?? ''}`,
+    new RegExp(escaped, 'g'),
+    'http://localhost:3000',
   );
 }
 

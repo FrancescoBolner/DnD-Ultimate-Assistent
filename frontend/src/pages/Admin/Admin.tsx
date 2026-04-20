@@ -386,7 +386,7 @@ function CampaignsPanel() {
 }
 
 /* ── Images Panel ── */
-const toPublicUrl = (p: string) => `http://localhost:3000/${encodeURI(p)}`;
+const toPublicUrl = (p: string) => `http://localhost:3000/${encodeURI(p)}`; // canonical; rewriteLocalhostInJson rewrites to backend origin in production
 
 function FileThumb({ file, onClick }: { file: AdminImage; onClick?: () => void }) {
   if (file.type === 'image') {
