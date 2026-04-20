@@ -4,6 +4,7 @@ import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import { env } from './config/env';
 import { testConnection } from './config/db';
+import { initDb } from './db/init';
 import { createSocketServer } from './realtime/socket';
 import authRoutes from './auth/auth.routes';
 import campaignRoutes from './modules/campaigns/campaigns.routes';
@@ -79,6 +80,7 @@ app.use(errorHandler);
 async function start() {
   try {
     await testConnection();
+    await initDb();
   } catch (err) {
     console.error('✗ Database connection failed:', err);
   }
