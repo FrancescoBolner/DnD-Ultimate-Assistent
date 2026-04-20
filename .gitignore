@@ -40,3 +40,9 @@ backend/src/db/*_export.sql
 backend/src/db/csv_export/
 backend/import-schema.mjs
 backend/tidb-ca.pem
+# Local DB dumps and temp scripts
+fresh_dump.sql
+fresh_dump_utf8.sql
+local_dump.sql
+gen_seed.py
+*.sql.bak
