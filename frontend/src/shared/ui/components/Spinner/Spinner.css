@@ -1,0 +1,35 @@
+/* =============================================================
+   Spinner – loading animation
+   ============================================================= */
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.spinner {
+  display:        inline-flex;
+  flex-direction: column;
+  align-items:    center;
+  gap:            8px;
+}
+
+.spinner__ring {
+  display:      block;
+  border-radius: 50%;
+  border:        2px solid var(--color-border);
+  border-top-color: var(--color-accent);
+  animation:    spin 0.65s linear infinite;
+  flex-shrink:  0;
+}
+
+/* ── Sizes ── */
+.spinner--xs .spinner__ring { width: 14px; height: 14px; }
+.spinner--sm .spinner__ring { width: 20px; height: 20px; }
+.spinner--md .spinner__ring { width: 28px; height: 28px; border-width: 3px; }
+.spinner--lg .spinner__ring { width: 40px; height: 40px; border-width: 3px; }
+
+.spinner__text {
+  font-size:   0.8rem;
+  color:       var(--color-text-muted);
+  white-space: nowrap;
+}

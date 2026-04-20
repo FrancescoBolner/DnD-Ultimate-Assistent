@@ -1,0 +1,40 @@
+/* =============================================================
+   CharacterCard – player character summary card
+   ============================================================= */
+
+.character-card .card__body { padding: 0; }
+
+.character-card__inner {
+  display:        flex;
+  flex-direction: column;
+  gap:            10px;
+  padding:        12px;
+}
+
+/* Compact HP strip */
+.character-card__compact-hp {
+  display:     flex;
+  align-items: baseline;
+  gap:         6px;
+}
+.character-card__hp-label {
+  font-size:      0.65rem;
+  font-weight:    700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color:          var(--color-text-muted);
+}
+.character-card__hp-value {
+  font-size:   0.85rem;
+  font-weight: 700;
+  color:       var(--color-text);
+  font-family: var(--font-mono, monospace);
+}
+
+/* Conditions */
+.character-card__conditions {
+  display:     flex;
+  flex-wrap:   wrap;
+  gap:         4px;
+  margin-top:  2px;
+}

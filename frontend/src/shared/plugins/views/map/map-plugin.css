@@ -1,0 +1,716 @@
+/* =============================================================
+   Map Plugin
+   ============================================================= */
+
+.mplg {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  min-height: 0;
+  height: 100%;
+}
+
+/* -- Empty state -- */
+.mplg__empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 32px;
+  color: var(--color-text-muted);
+  text-align: center;
+  flex: 1;
+}
+
+/* -- Toolbar (shared) -- */
+.mplg__toolbar {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 6px;
+  background: var(--color-bg-raised);
+  border-bottom: 1px solid var(--color-border);
+  flex-shrink: 0;
+  z-index: 2;
+}
+
+/* Fullscreen toolbar: two groups pushed to each end */
+.mplg__toolbar--fs {
+  justify-content: space-between;
+  padding: 5px 10px;
+}
+.mplg__toolbar-left {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.mplg__toolbar-right {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.mplg__select {
+  background: var(--color-bg-base);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: 2px 6px;
+  font-size: 0.75rem;
+  color: var(--color-text);
+  max-width: 160px;
+}
+
+.mplg__shape-picker {
+  display: flex;
+  gap: 3px;
+}
+
+.mplg__shape-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-bg-base);
+  color: var(--color-text-muted);
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s, background 0.15s;
+  flex-shrink: 0;
+}
+
+.mplg__shape-btn:hover {
+  border-color: var(--color-accent);
+  color: var(--color-text);
+}
+
+.mplg__shape-btn--active {
+  border-color: var(--color-accent);
+  background: color-mix(in srgb, var(--color-accent) 15%, transparent);
+  color: var(--color-accent);
+}
+
+.mplg__color-picker {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.mplg__color-btn {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: border-color 0.15s, transform 0.1s;
+  outline: 1px solid color-mix(in srgb, currentColor 20%, transparent);
+  outline-offset: 1px;
+}
+
+.mplg__color-btn:hover {
+  transform: scale(1.2);
+}
+
+.mplg__color-btn--active {
+  border-color: var(--color-text);
+  transform: scale(1.15);
+}
+
+.mplg__map-name {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--color-text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 160px;
+}
+
+.mplg__icon-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  transition: color var(--transition-fast), border-color var(--transition-fast);
+  flex-shrink: 0;
+}
+.mplg__icon-btn:hover         { background: rgba(255,255,255,0.07); border-color: var(--color-text-muted); color: var(--color-text); }
+.mplg__icon-btn--active        { color: var(--color-accent); border-color: var(--color-accent); background: rgba(var(--color-accent-rgb, 255,152,0), 0.15); }
+.mplg__icon-btn--active:hover  { background: rgba(var(--color-accent-rgb, 255,152,0), 0.26); }
+.mplg__icon-btn--danger:hover  { color: var(--color-danger, #ef5350); border-color: var(--color-danger, #ef5350); }
+.mplg__icon-btn--visible       { color: #4caf50; border-color: #4caf50; }
+.mplg__icon-btn--visible:hover { background: rgba(76, 175, 80, 0.12); }
+
+/* -- Canvas wrapper (non-fullscreen) -- */
+.mplg__canvas-wrap {
+  flex: 1;
+  min-height: 0;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Native browser fullscreen: fill the whole screen */
+.mplg__canvas-wrap:fullscreen,
+.mplg__canvas-area:fullscreen {
+  background: #000;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.mplg__canvas-wrap:fullscreen canvas,
+.mplg__canvas-area:fullscreen canvas {
+  flex: 1;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* Exit-fullscreen overlay button (top-left, red) */
+.mplg__fs-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: none;
+  background: #ef4444;
+  color: #fff;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: opacity 0.15s;
+}
+.mplg__fs-close:hover {
+  opacity: 1;
+}
+
+/* -- Button -- */
+.mplg__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 5px 10px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--color-text);
+  cursor: pointer;
+  font-size: 0.75rem;
+  white-space: nowrap;
+  transition: all var(--transition-fast);
+}
+.mplg__btn:hover               { border-color: var(--color-accent); color: var(--color-accent); }
+.mplg__btn:disabled            { opacity: 0.4; pointer-events: none; }
+.mplg__btn--accent             { border-color: var(--color-accent); color: var(--color-accent); }
+.mplg__btn--accent:hover       { background: rgba(var(--color-accent-rgb, 255,152,0), 0.15); }
+.mplg__btn--danger             { border-color: var(--color-danger, #ef5350); color: var(--color-danger, #ef5350); }
+.mplg__btn--danger:hover       { background: rgba(239, 83, 80, 0.1); }
+.mplg__btn--full               { width: 100%; justify-content: center; }
+
+/* ----------------------------------------------------------
+   FULLSCREEN LAYOUT
+   ---------------------------------------------------------- */
+
+.mplg--fs {
+  flex-direction: column;
+}
+
+/* Remove body padding/scroll so map fills the entire plugin shell */
+.plugin--fullscreen .plugin__body:has(> .mplg--fs) {
+  padding: 0;
+  overflow: hidden;
+}
+/* Map view must fill the body height */
+.plugin--fullscreen .mplg--fs {
+  height: 100%;
+}
+
+/* Body = sidebar + canvas side by side */
+.mplg__fs-body {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start; /* canvas aspect-ratio sets row height */
+  overflow: hidden;
+  position: relative; /* anchor for infobox overlay */
+}
+
+/* -- Sidebar -- */
+.mplg__sidebar {
+  width: 220px;
+  flex-shrink: 0;
+  border-right: 1px solid var(--color-border);
+  background: var(--color-bg-raised);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  align-self: stretch; /* stretch to match canvas height */
+}
+
+.mplg__sidebar-section {
+  padding: 8px;
+  border-bottom: 1px solid var(--color-border);
+  flex-shrink: 0;
+}
+
+.mplg__sidebar-title {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-text-muted);
+  margin-bottom: 8px;
+}
+.mplg__sidebar-title--sm {
+  padding: 6px 8px 4px;
+  margin-bottom: 0;
+}
+
+/* Entity name when in edit mode */
+.mplg__edit-name {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--color-accent);
+  padding: 4px 0 8px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Form fields */
+.mplg__form-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.mplg__form-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+}
+
+.mplg__form-label {
+  font-size: 0.7rem;
+  color: var(--color-text-muted);
+  flex-shrink: 0;
+  width: 42px;
+}
+
+.mplg__form-value {
+  flex: 1;
+  font-size: 0.75rem;
+  color: var(--color-text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.mplg__num-input {
+  flex: 1;
+  min-width: 0;
+  background: var(--color-bg-base);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: 3px 6px;
+  font-size: 0.78rem;
+  color: var(--color-text);
+  text-align: right;
+}
+.mplg__num-input:focus {
+  outline: none;
+  border-color: var(--color-accent);
+}
+
+.mplg__clear-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border: none;
+  background: transparent;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+.mplg__clear-btn:hover { color: var(--color-danger, #ef5350); }
+
+/* Action buttons (Set parent image / Pick location) */
+.mplg__action-btn {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 8px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  font-size: 0.74rem;
+  transition: all var(--transition-fast);
+  width: 100%;
+  justify-content: flex-start;
+}
+.mplg__action-btn:hover {
+  background: rgba(255,255,255,0.06);
+  border-color: var(--color-text-muted);
+  color: var(--color-text);
+}
+.mplg__action-btn--active {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+  background: rgba(var(--color-accent-rgb, 255,152,0), 0.15);
+  font-weight: 600;
+}
+.mplg__action-btn--active:hover {
+  background: rgba(var(--color-accent-rgb, 255,152,0), 0.26);
+}
+
+/* Save/Cancel row */
+.mplg__form-row-btns {
+  display: flex;
+  gap: 6px;
+}
+.mplg__form-row-btns .mplg__btn { flex: 1; justify-content: center; }
+
+/* Entity list section */
+.mplg__sidebar-list {
+  flex: 1;
+  border-bottom: 1px solid var(--color-border);
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.mplg__entity-scroll {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.mplg__no-entities {
+  padding: 8px 10px;
+  font-size: 0.74rem;
+  color: var(--color-text-muted);
+  font-style: italic;
+}
+
+/* Sidebar bottom (delete map) */
+.mplg__sidebar-bottom {
+  padding: 8px;
+  flex-shrink: 0;
+}
+
+/* -- Confirm-delete prompt -- */
+.mplg__confirm {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.mplg__confirm-text {
+  font-size: 0.73rem;
+  color: var(--color-text-muted);
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.mplg__confirm-btns {
+  display: flex;
+  gap: 6px;
+}
+
+/* -- Canvas area (fullscreen) -- */
+.mplg__canvas-area {
+  flex: 1;
+  min-width: 0;
+  aspect-ratio: 16 / 9;
+  position: relative;
+  overflow: hidden;
+  /* align-self inherits flex-start from fs-body — canvas drives row height */
+}
+.mplg__canvas-area--picking,
+.mplg__canvas-area--picking canvas {
+  cursor: crosshair !important;
+}
+
+/* -- Entity list items (shared) -- */
+.mplg__entity-list {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid var(--color-border);
+}
+
+.mplg__entity-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 10px;
+  cursor: pointer;
+  transition: background var(--transition-fast);
+  font-size: 0.75rem;
+  color: var(--color-text);
+}
+.mplg__entity-item:hover          { background: rgba(255,255,255,0.04); }
+.mplg__entity-item--selected      { background: rgba(var(--color-accent-rgb,255,152,0), 0.1); }
+
+.mplg__entity-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.mplg__entity-dot--character { background: #4fc3f7; }
+.mplg__entity-dot--creature  { background: #bdbdbd; }
+.mplg__entity-dot--npc       { background: #81c784; }
+.mplg__entity-dot--enemy     { background: #ef5350; }
+.mplg__entity-dot--ally      { background: #ffb74d; }
+.mplg__entity-dot--beast     { background: #ba68c8; }
+
+.mplg__entity-name {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.mplg__entity-del {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border: none;
+  background: transparent;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+  opacity: 0;
+  transition: opacity var(--transition-fast), color var(--transition-fast);
+}
+.mplg__entity-item:hover .mplg__entity-del { opacity: 1; }
+.mplg__entity-del:hover { color: var(--color-danger, #ef5350); }
+
+/* -- Entity filter input -- */
+.mplg__filter-input {
+  display: block;
+  width: calc(100% - 16px);
+  box-sizing: border-box;
+  padding: 4px 8px;
+  margin-bottom: 4px;
+  margin-left: 8px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  color: var(--color-text);
+  font-size: 0.74rem;
+  outline: none;
+}
+.mplg__filter-input:focus { border-color: var(--color-accent); }
+
+/* -- Infobox (widget view � bottom strip) -- */
+.mplg__infobox {
+  background: var(--color-bg-raised);
+  border-top: 1px solid var(--color-border);
+  padding: 8px 10px;
+  flex-shrink: 0;
+}
+
+/* -- Infobox overlay (fullscreen — bottom of canvas, never cropped) -- */
+.mplg__infobox-overlay {
+  position: absolute;
+  bottom: 12px;
+  /* default: no sidebar — center in full width */
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(15, 15, 25, 0.92);
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  padding: 10px 14px;
+  backdrop-filter: blur(6px);
+  min-width: 220px;
+  max-width: 320px;
+  z-index: 20;
+  pointer-events: auto;
+}
+/* DM view: sidebar is 220px — shift center right to stay over the canvas */
+.mplg__fs-body:has(.mplg__sidebar) .mplg__infobox-overlay {
+  left: calc(220px + (100% - 220px) / 2);
+}
+.mplg__infobox-close {
+  position: absolute;
+  top: 6px;
+  right: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border: none;
+  background: transparent;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  border-radius: 4px;
+}
+.mplg__infobox-close:hover { color: var(--color-text); }
+
+.mplg__infobox-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.mplg__infobox-img {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--color-border);
+}
+
+.mplg__infobox-name {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.mplg__infobox-meta {
+  font-size: 0.7rem;
+  color: var(--color-text-muted);
+  text-transform: capitalize;
+}
+
+.mplg__infobox-stats {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 0.72rem;
+  color: var(--color-text-muted);
+}
+.mplg__infobox-stats span { font-weight: 500; }
+
+.mplg__infobox-sheet-btn {
+  margin-top: 6px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  width: 100%;
+  padding: 4px 8px;
+  border-radius: 4px;
+  background: rgba(var(--color-accent-rgb, 99, 102, 241), 0.12);
+  border: 1px solid rgba(var(--color-accent-rgb, 99, 102, 241), 0.25);
+  color: var(--color-accent, #818cf8);
+  font-size: 0.72rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.mplg__infobox-sheet-btn:hover {
+  background: rgba(var(--color-accent-rgb, 99, 102, 241), 0.22);
+}
+
+/* -- Infobox actions row (sheet + delete) -- */
+.mplg__infobox-actions {
+  margin-top: 6px;
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+.mplg__infobox-actions .mplg__infobox-sheet-btn {
+  margin-top: 0;
+  flex: 1;
+}
+.mplg__infobox-del-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  border: 1px solid rgba(239, 83, 80, 0.3);
+  border-radius: 4px;
+  background: rgba(239, 83, 80, 0.08);
+  color: #ef5350;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+.mplg__infobox-del-btn:hover {
+  background: rgba(239, 83, 80, 0.2);
+  border-color: rgba(239, 83, 80, 0.6);
+}
+
+/* ----------------------------------------------------------
+   MAP ENGINE INTERNALS
+   ---------------------------------------------------------- */
+
+.map-engine {
+  background: #000000;
+}
+
+/* -- Marks overlay -- */
+.map-marks-overlay {
+  pointer-events: none;
+}
+
+.map-mark {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  pointer-events: none;
+}
+
+.map-mark--dot     { width:24px; height:24px; background-image:url('/mark/dot.svg');     filter: invert(87%) sepia(0%) saturate(899%) hue-rotate(202deg) brightness(89%) contrast(91%)  drop-shadow(0 0 5px rgba(0,0,0,1)); }
+.map-mark--city    { width:36px; height:36px; background-image:url('/mark/city.svg');    filter: invert(84%) sepia(45%) saturate(1468%) hue-rotate(356deg) brightness(99%) contrast(106%) drop-shadow(0 0 5px rgba(0,0,0,1)); }
+.map-mark--dungeon { width:24px; height:24px; background-image:url('/mark/dungeon.svg'); filter: invert(12%) sepia(78%) saturate(3968%) hue-rotate(1deg) brightness(84%) contrast(122%)  drop-shadow(0 0 5px rgba(0,0,0,1)); }
+.map-mark--fight   { width:24px; height:24px; background-image:url('/mark/fight.svg');   filter: invert(53%) sepia(85%) saturate(4160%) hue-rotate(327deg) brightness(85%) contrast(114%) drop-shadow(0 0 5px rgba(0,0,0,1)); }
+.map-mark--treasure{ width:24px; height:24px; background-image:url('/mark/treasure.svg');filter: invert(57%) sepia(99%) saturate(1376%) hue-rotate(1deg) brightness(104%) contrast(105%) drop-shadow(0 0 5px rgba(0,0,0,1)); }
+.map-mark--landmark{ width:24px; height:24px; background-image:url('/mark/landmark.svg');filter: invert(47%) sepia(29%) saturate(2821%) hue-rotate(152deg) brightness(104%) contrast(101%) drop-shadow(0 0 5px rgba(0,0,0,1)); }
+.map-mark--enemy   { width:36px; height:36px; background-image:url('/mark/enemy.svg');   filter: invert(26%) sepia(84%) saturate(5394%) hue-rotate(354deg) brightness(88%) contrast(134%) drop-shadow(0 0 5px rgba(0,0,0,1)); }
+
+/* -- Mark hover popup -- */
+.map-mark-info {
+  display: none;
+  position: absolute;
+  background: rgba(10, 10, 20, 0.9);
+  color: #e8e8e8;
+  padding: 5px 10px;
+  font-size: 0.7rem;
+  line-height: 1.45;
+  border-radius: 6px;
+  pointer-events: none;
+  width: max-content;
+  max-width: min(320px, 45vw);
+  text-align: center;
+  z-index: 100;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.6);
+  white-space: normal;
+  word-break: break-word;
+}
+.map-mark-info strong {
+  display: block;
+  font-weight: 600;
+  font-size: 0.72rem;
+  margin-bottom: 1px;
+}
+

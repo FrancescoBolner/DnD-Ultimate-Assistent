@@ -1,0 +1,15 @@
+/* =============================================================
+   StatRow – six D&D ability scores in a row
+   ============================================================= */
+
+.stat-row {
+  display:         flex;
+  flex-wrap:       wrap;
+  gap:             6px;
+  align-items:     flex-start;
+}
+
+/* On very small widths show 3+3 */
+@media (max-width: 340px) {
+  .stat-row { justify-content: center; }
+}

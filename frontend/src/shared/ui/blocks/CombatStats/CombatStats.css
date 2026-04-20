@@ -1,0 +1,17 @@
+/* =============================================================
+   CombatStats – HP bar + combat badge chips row
+   ============================================================= */
+
+.combat-stats {
+  display:        flex;
+  flex-direction: column;
+  gap:            8px;
+  width:          100%;
+}
+
+.combat-stats__chips {
+  display:     flex;
+  flex-wrap:   wrap;
+  gap:         6px;
+  align-items: center;
+}

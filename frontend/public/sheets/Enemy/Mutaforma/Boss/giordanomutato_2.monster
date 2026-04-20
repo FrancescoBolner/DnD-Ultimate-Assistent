@@ -1,0 +1,174 @@
+{
+"name":"Giordano Mutato",
+"size":"gargantuan",
+"type":"aberration",
+"tag":"shapeshifter",
+"alignment":"chaotic evil",
+"hitDice":"20",
+"armorName":"flesh and stone",
+"shieldBonus":0,
+"natArmorBonus":6,
+"otherArmorDesc":"22 (living dungeon flesh)",
+"speed":"0",
+"burrowSpeed":"0",
+"climbSpeed":"0",
+"flySpeed":"0",
+"hover":false,
+"swimSpeed":"0",
+"customHP":true,
+"customSpeed":true,
+"hpText":"50 + 10d6 (phase 2 body)",
+"speedDesc":"0m (fused with the chamber)",
+"strPoints":"22",
+"dexPoints":"8",
+"conPoints":"22",
+"intPoints":"10",
+"wisPoints":"14",
+"chaPoints":"16",
+"blindsight":"60",
+"blind":false,
+"darkvision":"120",
+"tremorsense":"120",
+"truesight":"0",
+"telepathy":60,
+"cr":"8",
+"customCr":"10 (5,900 XP)",
+"customProf":4,
+"isLegendary":true,
+"legendariesDescription":"Giordano Mutato can take 3 legendary actions, choosing from the options below. Only one legendary action option can be used at a time and only at the end of another creature's turn. Giordano regains spent legendary actions at the start of its turn.",
+"isLair":true,
+"lairDescription":"When fighting inside the chamber, Giordano controls the dungeon itself. On initiative count 20 (losing initiative ties), Giordano can use one lair action:",
+"lairDescriptionEnd":"Giordano can't use the same lair action twice in a row.",
+"isMythic":false,
+"isRegional":false,
+
+"abilities":[
+
+{
+"name":"Living Dungeon",
+"desc":"Giordano is fused with the entire chamber. It cannot be knocked prone, grappled, or moved. All parts of the room are considered part of its body."
+},
+
+{
+"name":"Tormented Soul",
+"desc":"When Giordano takes damage from healing magic, the damage is doubled. The creature screams in agony as the corruption is burned away."
+},
+
+{
+"name":"Flesh Regeneration",
+"desc":"At the start of its turn Giordano regains [1D6] hit points unless it took radiant damage during the previous round."
+}
+
+],
+
+"actions":[
+
+{
+"name":"Tentacle Barrage",
+"desc":"_Melee Weapon Attack:_ [STR ATK] to hit, reach 6m, two targets. _Hit:_ [2D6] piercing damage and the target must succeed on a Strength saving throw (DC [STR SAVE]) or be restrained by flesh tendrils."
+},
+
+{
+"name":"Rotazione Esagonale",
+"desc":"The entire chamber spins violently. Each creature must succeed on a Dexterity saving throw (DC [DEX SAVE]) or take [2D6] bludgeoning damage and be pushed 3m toward a wall."
+},
+
+{
+"name":"Colonne Schiaccianti",
+"desc":"Two stone columns slam down. Each creature within 3m must make a Dexterity saving throw (DC [DEX SAVE]). On a failure they take [3D4] bludgeoning damage."
+},
+
+{
+"name":"Dardi Putridi",
+"desc":"Giordano launches chunks of infected flesh. _Ranged Attack:_ [STR ATK] to hit, range 12m, two targets. _Hit:_ [3D4] piercing damage + [1D4] poison damage at the start of the target's next turn."
+},
+
+{
+"name":"Pavimento Vorace",
+"desc":"The floor liquefies into flesh. Each creature in a 3m radius must succeed on a Dexterity saving throw (DC [DEX SAVE]) or take [2D6] bludgeoning damage and fall prone."
+}
+
+],
+
+"bonusActions":[
+
+{
+"name":"Spawn Mimutato",
+"desc":"Giordano tears off a piece of its own flesh, creating one small mimutato creature that acts on the next initiative count."
+}
+
+],
+
+"reactions":[
+
+{
+"name":"Tentacolo Difensivo",
+"desc":"When a creature moves within 3m. _Melee Attack:_ [STR ATK] to hit. _Hit:_ [1D8] piercing damage."
+}
+
+],
+
+"legendaries":[
+
+{
+"name":"Tentacoli Murali",
+"desc":"Tentacles erupt from the walls. One creature within 6m must succeed on a Strength saving throw (DC [STR SAVE]) or be restrained until the end of its next turn."
+},
+
+{
+"name":"Urlo dell’Anima",
+"desc":"A psychic scream echoes in the chamber. Each creature must succeed on a Wisdom saving throw (DC [WIS SAVE]) or suffer disadvantage on their next attack roll."
+},
+
+{
+"name":"Carne Strisciante",
+"desc":"Flesh spreads across the floor. One area becomes difficult terrain until the next round."
+}
+
+],
+
+"lairs":[
+
+{
+"name":"Flesh Growth",
+"desc":"New tendrils erupt from the ground. One random creature takes [1D6] piercing damage."
+},
+
+{
+"name":"Stone Collapse",
+"desc":"Pieces of the ceiling collapse. Each creature must succeed on a Dexterity saving throw or take [2D6] bludgeoning damage."
+}
+
+],
+
+"sthrows":[
+{"name":"con","order":2},
+{"name":"wis","order":4}
+],
+
+"skills":[
+{"name":"perception","stat":"wis"}
+],
+
+"damagetypes":[],
+
+"specialdamage":[
+{"name":"healing magic (x2)","note":" (Vulnerable)","type":"v"}
+],
+
+"conditions":[],
+
+"languages":["deep speech"],
+
+"understandsBut":"common",
+
+"shortName":"Giordano",
+
+"pluralName":"Giordani Mutati",
+
+"doubleColumns":true,
+
+"separationPoint":5,
+
+"damage":[]
+}

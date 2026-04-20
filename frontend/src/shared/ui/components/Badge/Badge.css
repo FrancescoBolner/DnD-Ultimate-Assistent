@@ -1,0 +1,82 @@
+/* =============================================================
+   Badge – colored pill/chip for labels, conditions, tags
+   ============================================================= */
+
+.badge {
+  display:        inline-flex;
+  align-items:    center;
+  gap:            4px;
+  font-weight:    500;
+  line-height:    1;
+  white-space:    nowrap;
+  border-radius:  var(--radius-sm);
+  border:         1px solid transparent;
+  transition:     background var(--transition-fast), color var(--transition-fast);
+}
+
+/* ── Pill shape ── */
+.badge--pill { border-radius: 999px; }
+
+/* ── Sizes ── */
+.badge--xs  { padding: 2px  6px;  font-size: 0.65rem; }
+.badge--sm  { padding: 3px  8px;  font-size: 0.7rem;  }
+.badge--md  { padding: 4px 10px;  font-size: 0.75rem; }
+
+/* ── Variants ── */
+.badge--default {
+  background: var(--color-bg-raised);
+  color:      var(--color-text-muted);
+  border-color: var(--color-border);
+}
+
+.badge--accent {
+  background: var(--color-accent-bg);
+  color:      var(--color-accent);
+  border-color: color-mix(in srgb, var(--color-accent) 30%, transparent);
+}
+
+.badge--success {
+  background: color-mix(in srgb, var(--color-success) 15%, transparent);
+  color:      var(--color-success);
+  border-color: color-mix(in srgb, var(--color-success) 30%, transparent);
+}
+
+.badge--warning {
+  background: color-mix(in srgb, var(--color-warning) 15%, transparent);
+  color:      var(--color-warning);
+  border-color: color-mix(in srgb, var(--color-warning) 30%, transparent);
+}
+
+.badge--danger {
+  background: color-mix(in srgb, var(--color-danger) 15%, transparent);
+  color:      var(--color-danger);
+  border-color: color-mix(in srgb, var(--color-danger) 30%, transparent);
+}
+
+.badge--info {
+  background: color-mix(in srgb, var(--color-info) 15%, transparent);
+  color:      var(--color-info);
+  border-color: color-mix(in srgb, var(--color-info) 30%, transparent);
+}
+
+.badge--ghost {
+  background:   transparent;
+  color:        var(--color-text-muted);
+  border-color: var(--color-border);
+}
+
+/* ── Inner parts ── */
+.badge__dot {
+  width:         6px;
+  height:        6px;
+  border-radius: 50%;
+  background:    currentColor;
+  flex-shrink:   0;
+}
+
+.badge__icon {
+  display:     flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+.badge__icon svg { width: 10px; height: 10px; }

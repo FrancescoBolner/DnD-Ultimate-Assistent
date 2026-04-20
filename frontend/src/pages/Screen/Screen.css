@@ -1,0 +1,37 @@
+/* Full-page screen view – fits viewport letterboxed */
+.scr-page {
+  position: fixed;
+  inset: 0;
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.scr-page--empty {
+  color: #555;
+  font-size: 1.125rem;
+  font-family: sans-serif;
+}
+
+/* Letterbox container: fills as much space as possible while keeping aspect ratio */
+.scr-page__display {
+  width: min(100vw, calc(100vh * var(--ar-w) / var(--ar-h)));
+  height: min(100vh, calc(100vw * var(--ar-h) / var(--ar-w)));
+  position: relative;
+}
+
+/* Override scr-display-wrap: no border, no radius on full page */
+.scr-page__display .scr-display-wrap {
+  border: none;
+  border-radius: 0;
+  height: 100%;
+  width: 100%;
+}
+
+.scr-page__display .scr-display {
+  height: 100%;
+  width: 100%;
+  aspect-ratio: unset;
+}

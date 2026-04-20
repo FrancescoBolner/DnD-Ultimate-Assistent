@@ -1,0 +1,212 @@
+/* ── Global accessibility & responsive layers ── */
+@import '../shared/styles/accessibility.css';
+@import '../shared/styles/responsive.css';
+
+/* =============================================================
+   DnD Ultimate Assistant – Design Tokens & Global Reset
+   ============================================================= */
+
+:root {
+  /* ── Surface palette (dark theme – default) ── */
+  --color-bg-base:      #0b0b14;
+  --color-bg-surface:   #111122;
+  --color-bg-raised:    #1a1a2e;
+  --color-bg-overlay:   #16162acc;
+  --color-border:       #2a2a3e;
+  --color-border-light: #3a3a52;
+
+  /* ── Text ── */
+  --color-text:         #e2e2ee;
+  --color-text-muted:   #8888a4;
+  --color-text-heading: #f0f0f8;
+
+  /* ── Accent (primary action) ── */
+  --color-accent:       #7c83ff;
+  --color-accent-hover: #9da3ff;
+  --color-accent-bg:    #7c83ff1a;
+
+  /* ── Semantic ── */
+  --color-success:      #34d399;
+  --color-success-hover:#2ab885;
+  --color-warning:      #fbbf24;
+  --color-danger:       #f87171;
+  --color-info:         #60a5fa;
+
+  /* Dim variants (tinted backgrounds) */
+  --color-success-dim:  rgba(52, 211, 153, 0.12);
+  --color-warning-dim:  rgba(251, 191, 36, 0.12);
+  --color-danger-dim:   rgba(248, 113, 113, 0.12);
+  --color-info-dim:     rgba(96, 165, 250, 0.12);
+  --color-accent-dim:   rgba(124, 131, 255, 0.12);
+
+  /* ── Extended surfaces ── */
+  --color-bg-card:      #1c1c28;
+  --color-bg-hover:     #222234;
+  --color-bg-inset:     #181825;
+  --color-bg-scrim:     rgba(0, 0, 0, 0.50);
+
+  /* ── Rarity ── */
+  --color-rarity-common:    var(--color-text-muted);
+  --color-rarity-uncommon:  #4aaf6e;
+  --color-rarity-rare:      #4a8caf;
+  --color-rarity-very-rare: #8b5cf6;
+  --color-rarity-legendary: #e8a53e;
+
+  /* ── HP bar ── */
+  --color-hp-high:      #34d399;
+  --color-hp-mid:       #fbbf24;
+  --color-hp-low:       #f87171;
+
+  /* ── Sizing ── */
+  --topbar-h:   60px;
+  --sidebar-w:  56px;
+  --sidebar-w-expanded: 200px;
+  --radius-sm:  4px;
+  --radius-md:  8px;
+  --radius-lg:  12px;
+  --radius-xl:  16px;
+
+  /* ── Shadows ── */
+  --shadow-sm:  0 1px 2px rgba(0,0,0,.3);
+  --shadow-md:  0 4px 12px rgba(0,0,0,.4);
+  --shadow-lg:  0 8px 30px rgba(0,0,0,.5);
+
+  /* ── Transitions ── */
+  --transition-fast:   150ms ease;
+  --transition-normal: 250ms ease;
+  --transition-med:    250ms ease;
+
+  /* ── Convenience aliases (used by plugin CSS) ── */
+  --glass-bg:    rgba(255, 255, 255, 0.04);
+  --hover-bg:    rgba(255, 255, 255, 0.08);
+  --text-muted:  var(--color-text-muted);
+  --accent:      var(--color-accent);
+  --accent-rgb:  124, 131, 255;
+
+  /* ── Typography ── */
+  --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+
+  font-family: var(--font-sans);
+  line-height: 1.5;
+  font-weight: 400;
+  color: var(--color-text);
+  background-color: var(--color-bg-base);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ── Light theme overrides ── */
+[data-theme="light"] {
+  --color-bg-base:      #f5f5f8;
+  --color-bg-surface:   #ffffff;
+  --color-bg-raised:    #eeeef2;
+  --color-bg-overlay:   rgba(0, 0, 0, 0.08);
+  --color-border:       #d4d4dc;
+  --color-border-light: #c0c0cc;
+
+  --color-text:         #1a1a2e;
+  --color-text-muted:   #6e6e82;
+  --color-text-heading: #111122;
+
+  --color-accent:       #5b63e0;
+  --color-accent-hover: #4a51c8;
+  --color-accent-bg:    rgba(91, 99, 224, 0.1);
+
+  --shadow-sm:  0 1px 2px rgba(0,0,0,.08);
+  --shadow-md:  0 4px 12px rgba(0,0,0,.1);
+  --shadow-lg:  0 8px 30px rgba(0,0,0,.12);
+
+  --color-success-hover:#22a06b;
+  --color-success-dim:  rgba(34, 160, 107, 0.10);
+  --color-warning-dim:  rgba(202, 150, 10, 0.10);
+  --color-danger-dim:   rgba(220, 60, 60, 0.10);
+  --color-info-dim:     rgba(50, 120, 220, 0.10);
+  --color-accent-dim:   rgba(91, 99, 224, 0.10);
+
+  --color-bg-card:      #f0f0f4;
+  --color-bg-hover:     #e8e8ee;
+  --color-bg-inset:     #e4e4ea;
+  --color-bg-scrim:     rgba(0, 0, 0, 0.30);
+
+  --color-rarity-uncommon:  #2e8b57;
+  --color-rarity-rare:      #357a9e;
+  --color-rarity-very-rare: #6d3fc0;
+  --color-rarity-legendary: #c88520;
+
+  --glass-bg:    rgba(0, 0, 0, 0.03);
+  --hover-bg:    rgba(0, 0, 0, 0.05);
+  --accent-rgb:  91, 99, 224;
+}
+
+/* ── Reset ── */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  min-width: 320px;
+  overflow: hidden;
+}
+
+#root {
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+}
+
+a {
+  color: var(--color-accent);
+  text-decoration: none;
+}
+a:hover {
+  color: var(--color-accent-hover);
+}
+
+h1, h2, h3, h4, h5 {
+  color: var(--color-text-heading);
+  font-weight: 600;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+input, select, textarea {
+  font-family: inherit;
+  color: var(--color-text);
+}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-border-light);
+}
+
+/* ── Utility ── */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  border: 0;
+}

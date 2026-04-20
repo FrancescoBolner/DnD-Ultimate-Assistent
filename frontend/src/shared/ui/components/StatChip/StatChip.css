@@ -1,0 +1,93 @@
+/* =============================================================
+   StatChip – compact labeled value chip (AC 15, Speed 30, CR 1/4)
+   ============================================================= */
+
+.stat-chip {
+  display:       inline-flex;
+  align-items:   center;
+  border-radius: var(--radius-md);
+  border:        1px solid var(--color-border);
+  background:    var(--color-bg-raised);
+  overflow:      hidden;
+  flex-shrink:   0;
+}
+
+/* ── Layouts ── */
+.stat-chip--vertical {
+  flex-direction: column;
+  gap: 0;
+  text-align: center;
+}
+
+.stat-chip--horizontal {
+  flex-direction: row;
+  gap: 0;
+}
+
+/* ── Sizes: vertical ── */
+.stat-chip--vertical.stat-chip--sm  { min-width: 40px; padding: 4px  6px; }
+.stat-chip--vertical.stat-chip--md  { min-width: 50px; padding: 6px  8px; }
+.stat-chip--vertical.stat-chip--lg  { min-width: 62px; padding: 8px 10px; }
+
+/* ── Sizes: horizontal ── */
+.stat-chip--horizontal.stat-chip--sm  { padding: 2px 0; }
+.stat-chip--horizontal.stat-chip--md  { padding: 3px 0; }
+.stat-chip--horizontal.stat-chip--lg  { padding: 4px 0; }
+
+/* ── Label ── */
+.stat-chip__label {
+  display:     flex;
+  align-items: center;
+  gap:         3px;
+  font-size:   0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color:       var(--color-text-muted);
+  white-space: nowrap;
+}
+
+.stat-chip--horizontal .stat-chip__label {
+  padding:     0 6px 0 8px;
+  border-right: 1px solid var(--color-border);
+  font-size:   0.65rem;
+}
+.stat-chip--horizontal.stat-chip--sm .stat-chip__label { padding: 4px  6px; }
+.stat-chip--horizontal.stat-chip--md .stat-chip__label { padding: 5px  8px; }
+.stat-chip--horizontal.stat-chip--lg .stat-chip__label { padding: 6px 10px; }
+
+/* ── Value ── */
+.stat-chip__value {
+  font-weight:  700;
+  color:        var(--color-text);
+  white-space:  nowrap;
+}
+
+.stat-chip--vertical.stat-chip--sm  .stat-chip__value { font-size: 0.85rem; }
+.stat-chip--vertical.stat-chip--md  .stat-chip__value { font-size: 1rem;    }
+.stat-chip--vertical.stat-chip--lg  .stat-chip__value { font-size: 1.15rem; }
+
+.stat-chip--horizontal.stat-chip--sm  .stat-chip__value { font-size: 0.8rem;  padding: 4px  6px; }
+.stat-chip--horizontal.stat-chip--md  .stat-chip__value { font-size: 0.875rem; padding: 5px 8px; }
+.stat-chip--horizontal.stat-chip--lg  .stat-chip__value { font-size: 1rem;    padding: 6px 10px; }
+
+/* ── Icon ── */
+.stat-chip__icon {
+  display:     flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+.stat-chip__icon svg { width: 10px; height: 10px; }
+
+/* ── Variants (accent color on value) ── */
+.stat-chip--accent  .stat-chip__value { color: var(--color-accent);  }
+.stat-chip--success .stat-chip__value { color: var(--color-success); }
+.stat-chip--warning .stat-chip__value { color: var(--color-warning); }
+.stat-chip--danger  .stat-chip__value { color: var(--color-danger);  }
+.stat-chip--info    .stat-chip__value { color: var(--color-info);    }
+
+.stat-chip--accent  { border-color: color-mix(in srgb, var(--color-accent)  25%, transparent); }
+.stat-chip--success { border-color: color-mix(in srgb, var(--color-success) 25%, transparent); }
+.stat-chip--warning { border-color: color-mix(in srgb, var(--color-warning) 25%, transparent); }
+.stat-chip--danger  { border-color: color-mix(in srgb, var(--color-danger)  25%, transparent); }
+.stat-chip--info    { border-color: color-mix(in srgb, var(--color-info)    25%, transparent); }

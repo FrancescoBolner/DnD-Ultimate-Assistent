@@ -1,0 +1,50 @@
+/* =============================================================
+   Tooltip – hover / focus popup label
+   ============================================================= */
+
+.tooltip-root {
+  position: relative;
+  display:  inline-flex;
+}
+
+.tooltip__popup {
+  position:       absolute;
+  z-index:        1000;
+  padding:        5px 10px;
+  background:     var(--color-bg-raised);
+  border:         1px solid var(--color-border);
+  border-radius:  var(--radius-sm);
+  font-size:      0.75rem;
+  color:          var(--color-text);
+  white-space:    nowrap;
+  pointer-events: none;
+  box-shadow:     0 4px 12px rgb(0 0 0 / 0.4);
+  animation:      tooltip-in 120ms ease;
+}
+
+@keyframes tooltip-in {
+  from { opacity: 0; transform: translateY(2px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Placement ── */
+.tooltip__popup--top {
+  bottom:    calc(100% + 6px);
+  left:      50%;
+  transform: translateX(-50%);
+}
+.tooltip__popup--bottom {
+  top:       calc(100% + 6px);
+  left:      50%;
+  transform: translateX(-50%);
+}
+.tooltip__popup--left {
+  right:     calc(100% + 6px);
+  top:       50%;
+  transform: translateY(-50%);
+}
+.tooltip__popup--right {
+  left:      calc(100% + 6px);
+  top:       50%;
+  transform: translateY(-50%);
+}

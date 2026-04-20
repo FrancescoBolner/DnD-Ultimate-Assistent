@@ -1,0 +1,138 @@
+/* =============================================================
+   ComboSearch — searchable dropdown with smart positioning
+   ============================================================= */
+
+.combo {
+  position: relative;
+}
+
+.combo__row {
+  display: flex;
+  gap: 8px;
+  align-items: flex-end;
+}
+
+.combo__field {
+  flex: 1;
+  position: relative;
+}
+
+.combo__input {
+  width: 100%;
+  background: var(--color-bg-base);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: 5px 8px;
+  font-size: 0.8125rem;
+  color: var(--color-text);
+  outline: none;
+  transition: border-color var(--transition-fast);
+  box-sizing: border-box;
+}
+.combo__input:focus {
+  border-color: var(--color-accent);
+}
+.combo__input::placeholder {
+  color: var(--color-text-muted);
+}
+
+/* ── Dropdown ── */
+
+.combo__dropdown {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  z-index: 999;
+  background: var(--color-bg-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-md);
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+/* Portal-rendered: position set via inline style (z-index also via inline style per call site). */
+.combo__dropdown--portal {
+  position: fixed;
+}
+
+/* ── Options ── */
+
+.combo__option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 10px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  color: var(--color-text);
+  transition: background var(--transition-fast);
+}
+
+.combo__option:hover {
+  background: var(--color-accent-bg);
+}
+
+.combo__option--custom {
+  font-style: italic;
+}
+
+.combo__option-label {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ── Badge ── */
+
+.combo__badge {
+  font-size: 0.67rem;
+  border-radius: 999px;
+  padding: 2px 6px;
+  border: 1px solid var(--color-border);
+  color: var(--color-text-muted);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.combo__badge--custom {
+  color: var(--color-accent);
+  border-color: var(--color-accent);
+  background: var(--color-accent-bg);
+}
+
+.combo__badge--npc    { color: var(--color-info); border-color: var(--color-info); }
+.combo__badge--enemy  { color: var(--color-danger); border-color: var(--color-danger); }
+.combo__badge--ally   { color: var(--color-success); border-color: var(--color-success); }
+.combo__badge--beast  { color: var(--color-warning); border-color: var(--color-warning); }
+
+/* ── Mini field (Qty / Turns / Init) ── */
+
+.combo__mini {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  font-size: 0.67rem;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  flex-shrink: 0;
+}
+
+.combo__mini-input {
+  width: 46px;
+  background: var(--color-bg-base);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: 5px 6px;
+  font-size: 0.8125rem;
+  color: var(--color-text);
+  outline: none;
+  transition: border-color var(--transition-fast);
+  box-sizing: border-box;
+}
+.combo__mini-input:focus {
+  border-color: var(--color-accent);
+}

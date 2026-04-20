@@ -1,0 +1,88 @@
+/* =============================================================
+   ToggleList — selectable list with per-item toggle + extras
+   ============================================================= */
+
+.tlist {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+/* ── Row ── */
+
+.tlist__row {
+  display: flex;
+  align-items: end;
+  gap: 8px;
+}
+
+/* ── Toggle button ── */
+
+.tlist__toggle {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-align: left;
+  padding: 5px 10px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-bg-base);
+  color: var(--color-text);
+  cursor: pointer;
+  transition: border-color var(--transition-fast), background var(--transition-fast);
+}
+
+.tlist__toggle:hover {
+  border-color: var(--color-accent);
+}
+
+.tlist__toggle--on {
+  border-color: var(--color-accent);
+  background: var(--color-accent-bg);
+  color: var(--color-accent);
+}
+
+/* ── Content ── */
+
+.tlist__label {
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+.tlist__secondary {
+  font-size: 0.7rem;
+  color: var(--color-text-muted);
+}
+
+.tlist__tag {
+  margin-left: auto;
+  font-size: 0.67rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  background: var(--color-bg-raised);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: 1px 6px;
+  white-space: nowrap;
+}
+
+.tlist__toggle--on .tlist__tag {
+  color: var(--color-accent);
+  border-color: color-mix(in srgb, var(--color-accent) 40%, transparent);
+  background: transparent;
+}
+
+.tlist__toggle--on .tlist__secondary {
+  color: var(--color-accent);
+  opacity: 0.7;
+}
+
+/* ── Extra controls (visible when selected) ── */
+
+.tlist__extra {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}

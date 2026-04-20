@@ -1,0 +1,39 @@
+/* =============================================================
+   StatBlock – single D&D ability score box (STR / 18 / +4)
+   ============================================================= */
+
+.stat-block {
+  display:        flex;
+  flex-direction: column;
+  align-items:    center;
+  gap:            1px;
+  padding:        8px 10px 6px;
+  min-width:      52px;
+  background:     var(--color-bg-raised);
+  border:         1px solid var(--color-border);
+  border-radius:  var(--radius-md);
+  text-align:     center;
+  flex-shrink:    0;
+}
+
+.stat-block__name {
+  font-size:      0.6rem;
+  font-weight:    700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color:          var(--color-accent);
+}
+
+.stat-block__score {
+  font-size:   1.1rem;
+  font-weight: 700;
+  color:       var(--color-text-heading);
+  line-height: 1.2;
+}
+
+.stat-block__mod {
+  font-size:   0.68rem;
+  font-weight: 600;
+  color:       var(--color-text-muted);
+  margin-top:  1px;
+}

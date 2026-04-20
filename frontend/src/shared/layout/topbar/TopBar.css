@@ -1,0 +1,110 @@
+/* =============================================================
+   TopBar
+   ============================================================= */
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: var(--topbar-h);
+  padding: 0 12px;
+  background: var(--color-bg-raised);
+  border-bottom: 1px solid var(--color-border);
+  flex-shrink: 0;
+  z-index: 100;
+  gap: 8px;
+}
+
+/* ── Left: button groups ── */
+.topbar__left {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex: 1;
+  min-width: 0;
+}
+
+/* Vertical separator between groups */
+.topbar__sep {
+  width: 1px;
+  height: 20px;
+  background: var(--color-border);
+  flex-shrink: 0;
+  margin: 0 4px;
+}
+
+.topbar__campaign-name {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-text-heading);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 220px;
+  min-width: 0;
+}
+
+/* ── Right: user panel ── */
+.topbar__right {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.topbar__user {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 8px;
+  border-radius: var(--radius-md);
+  background: var(--color-bg-surface);
+  border: 1px solid var(--color-border);
+}
+
+.topbar__username {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--color-text);
+  white-space: nowrap;
+}
+
+/* ── User pill — clickable state ── */
+.topbar__user {
+  cursor: default;
+  border: none;
+  background: var(--color-bg-surface);
+}
+.topbar__user--clickable {
+  cursor: pointer;
+}
+.topbar__user--clickable:hover {
+  background: var(--color-bg-raised);
+}
+
+/* ── Home variant: logo ── */
+.topbar--home .topbar__left {
+  flex: none;
+}
+
+.topbar__logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.topbar__logo-icon {
+  color: var(--color-accent);
+}
+
+.topbar__logo-text {
+  font-size: 0.9375rem;
+  font-weight: 700;
+  color: var(--color-text-heading);
+}
+
+/* ── Responsive ── */
+@media (max-width: 640px) {
+  .topbar__campaign-name { max-width: 110px; }
+  .topbar__username      { display: none; }
+  .topbar__sep           { display: none; }
+}

@@ -1,0 +1,68 @@
+/* =============================================================
+   AbilityCard – spell / ability display card
+   ============================================================= */
+
+.ability-card .card__body { padding: 0; }
+
+.ability-card__inner {
+  display:        flex;
+  flex-direction: column;
+  gap:            8px;
+  padding:        12px;
+}
+
+.ability-card__head {
+  display:         flex;
+  align-items:     flex-start;
+  justify-content: space-between;
+  gap:             8px;
+}
+
+.ability-card__title-group {
+  display:        flex;
+  flex-direction: column;
+  gap:            2px;
+  min-width:      0;
+}
+
+.ability-card__name {
+  font-size:     0.9rem;
+  font-weight:   700;
+  color:         var(--color-text-heading);
+  white-space:   nowrap;
+  overflow:      hidden;
+  text-overflow: ellipsis;
+}
+
+.ability-card__school {
+  font-size:  0.7rem;
+  color:      var(--color-text-muted);
+  font-style: italic;
+}
+
+.ability-card__badges {
+  display:         flex;
+  flex-wrap:       wrap;
+  gap:             4px;
+  flex-shrink:     0;
+  justify-content: flex-end;
+}
+
+.ability-card__chips {
+  display:     flex;
+  flex-wrap:   wrap;
+  gap:         6px;
+  align-items: center;
+}
+
+.ability-card__desc {
+  font-size:   0.78rem;
+  color:       var(--color-text-muted);
+  line-height: 1.5;
+  margin:      0;
+  display:     -webkit-box;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}

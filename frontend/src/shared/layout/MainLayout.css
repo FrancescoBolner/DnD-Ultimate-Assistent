@@ -1,0 +1,34 @@
+/* =============================================================
+   MainLayout
+   ============================================================= */
+.layout {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  background: var(--color-bg-base);
+}
+
+/* ── Body (sidebar + content) ── */
+.layout__body {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+/* ── Content area ── */
+.content {
+  flex: 1;
+  min-height: 0;        /* allow flex child to shrink & trigger overflow-y */
+  padding: 20px;
+  overflow-y: auto;
+  scrollbar-gutter: stable; /* prevent layout shift when scrollbar appears/disappears */
+  background: var(--color-bg-base);
+}
+
+@media (max-width: 768px) {
+  .content {
+    padding: 12px;
+  }
+}

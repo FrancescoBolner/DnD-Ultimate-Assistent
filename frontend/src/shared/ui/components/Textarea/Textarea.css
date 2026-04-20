@@ -1,0 +1,49 @@
+/* =============================================================
+   Textarea – building block
+   ============================================================= */
+
+.textarea-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.textarea-group__label {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.textarea-group__textarea {
+  padding: 8px 12px;
+  min-height: 72px;
+  resize: vertical;
+  background-color: var(--color-bg-raised);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  color: var(--color-text);
+  font-size: 0.875rem;
+  font-family: inherit;
+  outline: none;
+  transition: border-color var(--transition-fast);
+}
+
+.textarea-group__textarea:focus {
+  border-color: var(--color-accent);
+}
+
+.textarea-group__textarea::placeholder {
+  color: var(--color-text-muted);
+  opacity: 0.6;
+}
+
+.textarea-group--error .textarea-group__textarea {
+  border-color: var(--color-danger);
+}
+
+.textarea-group__error {
+  font-size: 0.75rem;
+  color: var(--color-danger);
+}

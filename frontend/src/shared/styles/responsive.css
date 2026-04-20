@@ -1,0 +1,74 @@
+/* =============================================================
+   Responsive – global breakpoints
+   ============================================================= */
+
+/* ── Mobile: ≤ 640px ── */
+@media (max-width: 640px) {
+  /* Sidebar hidden by default on mobile */
+  .sidebar {
+    transform: translateX(-100%);
+    z-index: 900;
+  }
+  .sidebar--mobile-open {
+    transform: translateX(0);
+  }
+
+  /* Main content takes full width */
+  .main-content {
+    margin-left: 0 !important;
+    width: 100% !important;
+  }
+
+  /* Dashboard: single column */
+  .dashboard__grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Vault: full width, smaller padding */
+  .vault-fullscreen {
+    left: 0 !important;
+    padding: 0.5rem !important;
+  }
+  .vault__toolbar {
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+  .vault__tabbar {
+    overflow-x: auto;
+  }
+
+  /* TopBar: tighter */
+  .topbar {
+    padding: 0 8px;
+  }
+  .topbar__campaign-name {
+    max-width: 120px;
+  }
+
+  /* Settings panel */
+  .settings-fullscreen {
+    left: 0 !important;
+  }
+
+  /* Home page: stack cards */
+  .home__campaigns {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* ── Tablet: 641px – 1024px ── */
+@media (min-width: 641px) and (max-width: 1024px) {
+  .dashboard__grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+
+  .home__campaigns {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+
+  .vault-fullscreen {
+    padding: 0.75rem;
+  }
+}
+
+/* ── Desktop: ≥ 1025px (default styles apply) ── */

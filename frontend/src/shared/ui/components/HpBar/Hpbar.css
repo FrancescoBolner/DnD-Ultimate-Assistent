@@ -1,0 +1,47 @@
+.hpbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+}
+
+.hpbar__track {
+  position: relative;
+  flex: 1;
+  background: var(--color-bg-base);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.hpbar--sm .hpbar__track { height: 4px; }
+.hpbar--md .hpbar__track { height: 8px; }
+.hpbar--lg .hpbar__track { height: 12px; }
+
+.hpbar__fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  border-radius: 999px;
+  transition: width 0.4s ease;
+}
+
+.hpbar__fill--high { background: var(--color-hp-high); }
+.hpbar__fill--mid  { background: var(--color-hp-mid); }
+.hpbar__fill--low  { background: var(--color-hp-low); }
+.hpbar__fill--temp { background: var(--color-info); opacity: 0.7; }
+
+.hpbar__label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  white-space: nowrap;
+  min-width: 56px;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.hpbar__temp {
+  color: var(--color-info);
+  font-size: 0.675rem;
+}

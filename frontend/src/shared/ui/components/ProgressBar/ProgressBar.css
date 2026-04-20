@@ -1,0 +1,61 @@
+/* =============================================================
+   ProgressBar – generic progress bar (charges, XP, etc.)
+   ============================================================= */
+
+.progress-bar {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 100%;
+}
+
+/* ── Header ── */
+.progress-bar__header {
+  display:         flex;
+  justify-content: space-between;
+  align-items:     baseline;
+  gap:             8px;
+}
+.progress-bar__label {
+  font-size:      0.75rem;
+  font-weight:    600;
+  color:          var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.progress-bar__count {
+  font-size:   0.75rem;
+  font-weight: 600;
+  color:       var(--color-text);
+}
+
+/* ── Track ── */
+.progress-bar__track {
+  width:         100%;
+  overflow:      hidden;
+  background:    var(--color-bg-raised);
+  border:        1px solid var(--color-border);
+  border-radius: 999px;
+}
+
+.progress-bar--sm .progress-bar__track { height: 4px;  }
+.progress-bar--md .progress-bar__track { height: 8px;  }
+.progress-bar--lg .progress-bar__track { height: 12px; }
+
+/* ── Fill ── */
+.progress-bar__fill {
+  height:         100%;
+  border-radius:  inherit;
+  min-width:      4px;
+}
+.progress-bar__fill--animated {
+  transition: width 0.3s ease;
+}
+
+/* ── Variants ── */
+.progress-bar--default .progress-bar__fill { background: var(--color-text-muted); }
+.progress-bar--accent  .progress-bar__fill { background: var(--color-accent);     }
+.progress-bar--success .progress-bar__fill { background: var(--color-success);    }
+.progress-bar--warning .progress-bar__fill { background: var(--color-warning);    }
+.progress-bar--danger  .progress-bar__fill { background: var(--color-danger);     }
+.progress-bar--info    .progress-bar__fill { background: var(--color-info);       }

@@ -1,0 +1,47 @@
+.sheet-viewer {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(0, 0, 0, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  backdrop-filter: blur(4px);
+}
+
+.sheet-viewer__close {
+  position: absolute;
+  top: 12px;
+  right: 14px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.sheet-viewer__close:hover {
+  background: rgba(255, 255, 255, 0.22);
+}
+
+.sheet-viewer__frame {
+  max-width: min(900px, 100%);
+  max-height: calc(100dvh - 32px);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.6);
+}
+
+.sheet-viewer__img {
+  display: block;
+  max-width: 100%;
+  max-height: calc(100dvh - 32px);
+  object-fit: contain;
+}

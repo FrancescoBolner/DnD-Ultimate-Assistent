@@ -1,0 +1,52 @@
+/* =============================================================
+   EntityHeader – avatar + name + subtitle + badges
+   ============================================================= */
+
+.entity-header {
+  display:     flex;
+  align-items: center;
+  gap:         12px;
+  min-width:   0;
+}
+
+.entity-header__info {
+  display:        flex;
+  flex-direction: column;
+  gap:            3px;
+  min-width:      0;
+  flex:           1;
+}
+
+.entity-header__top {
+  display:     flex;
+  align-items: center;
+  gap:         8px;
+  flex-wrap:   wrap;
+  min-width:   0;
+}
+
+.entity-header__name {
+  font-size:      1rem;
+  font-weight:    700;
+  color:          var(--color-text-heading);
+  white-space:    nowrap;
+  overflow:       hidden;
+  text-overflow:  ellipsis;
+  min-width:      0;
+}
+
+.entity-header__badges {
+  display:     flex;
+  flex-wrap:   wrap;
+  gap:         4px;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.entity-header__subtitle {
+  font-size:   0.75rem;
+  color:       var(--color-text-muted);
+  white-space: nowrap;
+  overflow:    hidden;
+  text-overflow: ellipsis;
+}

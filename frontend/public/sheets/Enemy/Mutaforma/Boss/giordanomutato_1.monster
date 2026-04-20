@@ -1,0 +1,127 @@
+{
+"name":"Giordano Mutato (Phase 1)",
+"size":"huge",
+"type":"aberration",
+"tag":"shapeshifter",
+"alignment":"chaotic evil",
+"hitDice":"12",
+"armorName":"rotting flesh",
+"shieldBonus":0,
+"natArmorBonus":4,
+"otherArmorDesc":"18 (unstable flesh mass)",
+"speed":"6m",
+"burrowSpeed":"0",
+"climbSpeed":"0",
+"flySpeed":"0",
+"hover":false,
+"swimSpeed":"0",
+"customHP":true,
+"customSpeed":true,
+"hpText":"30 + 10d6",
+"speedDesc":"6m (slithering flesh)",
+"strPoints":"20",
+"dexPoints":"10",
+"conPoints":"20",
+"intPoints":"10",
+"wisPoints":"12",
+"chaPoints":"14",
+"blindsight":"30",
+"blind":false,
+"darkvision":"60",
+"tremorsense":"30",
+"truesight":"0",
+"telepathy":30,
+"cr":"5",
+"customCr":"6 (2,300 XP)",
+"customProf":3,
+"isLegendary":false,
+"isLair":false,
+"isMythic":false,
+"isRegional":false,
+
+"abilities":[
+
+{
+"name":"Carne Instabile",
+"desc":"Whenever Giordano loses 10 hit points, a small mimutato creature tears itself from the flesh and joins the battle."
+},
+
+{
+"name":"Tormented Soul",
+"desc":"Healing magic damages Giordano instead. The damage dealt by healing spells is doubled."
+}
+
+],
+
+"actions":[
+
+{
+"name":"Morte Tentacolare",
+"desc":"_Melee Weapon Attack:_ [STR ATK] to hit, reach 3m. _Hit:_ [1D10] piercing damage."
+},
+
+{
+"name":"Dardi Putridi",
+"desc":"Giordano launches pieces of his own flesh. _Ranged Attack:_ [STR ATK] to hit, range 12m, two targets. _Hit:_ [3D4] piercing damage + [1D4] poison damage at the start of the target's next turn."
+},
+
+{
+"name":"Colonne Schiaccianti",
+"desc":"Stone columns slam down violently. Each creature within 3m must make a Dexterity saving throw (DC [DEX SAVE]). On a failure they take [3D4] bludgeoning damage."
+},
+
+{
+"name":"Tentacolo Afferrante",
+"desc":"_Melee Attack:_ [STR ATK] to hit. _Hit:_ [1D8] piercing damage and the target must succeed on a Strength saving throw (DC [STR SAVE]) or become restrained."
+}
+
+],
+
+"bonusActions":[
+
+{
+"name":"Rigurgito di Carne",
+"desc":"Giordano spits flesh onto the ground. The area becomes difficult terrain until the end of the next round."
+}
+
+],
+
+"reactions":[
+
+{
+"name":"Tentacolo Difensivo",
+"desc":"When a creature enters within 3m. _Melee Attack:_ [STR ATK] to hit. _Hit:_ [1D6] piercing damage."
+}
+
+],
+
+"sthrows":[
+{"name":"con","order":2}
+],
+
+"skills":[
+{"name":"perception","stat":"wis"}
+],
+
+"damagetypes":[],
+
+"specialdamage":[
+{"name":"healing magic (x2)","note":" (Vulnerable)","type":"v"}
+],
+
+"conditions":[],
+
+"languages":["deep speech"],
+
+"understandsBut":"common",
+
+"shortName":"Giordano",
+
+"pluralName":"Giordani Mutati",
+
+"doubleColumns":true,
+
+"separationPoint":5,
+
+"damage":[]
+}

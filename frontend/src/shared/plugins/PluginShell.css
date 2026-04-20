@@ -1,0 +1,237 @@
+/* =============================================================
+   PluginShell
+   ============================================================= */
+
+/* ── Base ── */
+.plugin {
+  display: flex;
+  flex-direction: column;
+  background: var(--color-bg-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition: box-shadow var(--transition-fast);
+}
+
+/* ── Header ── */
+.plugin__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  background: var(--color-bg-raised);
+  border-bottom: 1px solid var(--color-border);
+  flex-shrink: 0;
+}
+
+.plugin__title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--color-text-heading);
+}
+
+.plugin__controls {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.plugin__ctrl-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border: none;
+  background: none;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+  transition: background var(--transition-fast), color var(--transition-fast);
+}
+.plugin__ctrl-btn:hover {
+  background: var(--color-bg-surface);
+  color: var(--color-text);
+}
+.plugin__ctrl-btn--remove {
+  color: #22c55e;
+}
+.plugin__ctrl-btn--remove:hover {
+  background: rgba(34, 197, 94, 0.12);
+  color: #16a34a;
+}
+.plugin__ctrl-btn--edit-remove {
+  color: #22c55e;
+}
+.plugin__ctrl-btn--edit-remove:hover {
+  background: rgba(34, 197, 94, 0.12);
+  color: #16a34a;
+}
+.plugin__ctrl-btn--reorder:disabled {
+  opacity: 0.3;
+  pointer-events: none;
+}
+.plugin__ctrl-popup-icon {
+  transform: rotate(45deg);
+}
+
+/* ── Drag handle ── */
+.plugin__drag-handle {
+  display: flex;
+  align-items: center;
+  color: #22c55e;
+  cursor: grab;
+  margin-right: 4px;
+  padding: 2px 4px;
+  border-radius: var(--radius-sm);
+  transition: color var(--transition-fast);
+}
+.plugin__drag-handle:hover {
+  color: #16a34a;
+}
+.plugin__drag-handle:active {
+  cursor: grabbing;
+}
+
+/* Widget drag is handled by .dashboard__widget-wrap in Dashboard.css */
+
+/* ── Popup panel drag cursor on header ── */
+.plugin__header--popup-drag {
+  cursor: grab;
+  user-select: none;
+}
+.plugin__header--popup-drag:active {
+  cursor: grabbing;
+}
+
+/* ── Popup edit mode outline ── */
+.plugin--popup-edit {
+  outline: 1px dashed #22c55e;
+  outline-offset: -1px;
+}
+
+/* ── Plugin bubble (minimised popup) ── */
+.plugin-bubble {
+  position: fixed;
+  bottom: 80px;
+  right: 20px;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--color-accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: grab;
+  box-shadow: var(--shadow-lg);
+  z-index: 300;
+  user-select: none;
+}
+.plugin-bubble:active {
+  cursor: grabbing;
+}
+/* Green ring in edit mode */
+.plugin-bubble--edit {
+  outline: 2px dashed #22c55e;
+  outline-offset: 2px;
+}
+.plugin-bubble:hover .plugin-bubble__close {
+  opacity: 1;
+  pointer-events: auto;
+}
+.plugin-bubble__icon {
+  background: none;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+.plugin-bubble__close {
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #22c55e;
+  border: none;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: opacity var(--transition-fast), background var(--transition-fast);
+  z-index: 1;
+}
+.plugin-bubble__close:hover {
+  background: #16a34a;
+}
+
+/* ── Body ── */
+.plugin__body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 12px;
+}
+
+/* ── View mode: Widget (grid cell on dashboard) ── */
+.plugin--widget {
+  height: 360px;
+}
+.plugin--widget .plugin__body {
+  overflow-y: auto;
+}
+
+/* ── View mode: Home (card on dashboard grid) ── */
+.plugin--home {
+  height: 100%;
+}
+
+/* ── View mode: Fullscreen ── */
+.plugin--fullscreen {
+  position: fixed;
+  inset: var(--topbar-h) 0 0 var(--sidebar-w);
+  border-radius: var(--radius-lg);
+  border: none;
+  z-index: 150;
+  max-height: none;
+}
+.sidebar--collapsed ~ .content .plugin--fullscreen,
+.plugin--fullscreen {
+  --plugin-fullscreen: 1; /* recalculated via JS if needed; safe default */
+}
+
+/* ── View mode: Popup (floating panel) ── */
+.plugin--popup {
+  position: fixed;
+  bottom: 16px;
+  right: 16px;
+  width: 360px;
+  max-height: 315px;
+  box-shadow: var(--shadow-lg);
+  z-index: 99999;
+  border-radius: var(--radius-lg);
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .plugin--fullscreen {
+    inset: var(--topbar-h) 0 0 0;
+  }
+  .plugin--popup {
+    right: 12px;
+    bottom: 12px;
+  }
+}

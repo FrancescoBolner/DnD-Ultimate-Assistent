@@ -1,0 +1,54 @@
+/* =============================================================
+   Checkbox – styled accessible checkbox
+   ============================================================= */
+
+.checkbox {
+  display:     inline-flex;
+  align-items: center;
+  gap:         8px;
+  cursor:      pointer;
+  user-select: none;
+}
+
+.checkbox--disabled { opacity: 0.45; cursor: not-allowed; pointer-events: none; }
+
+/* ── The visual box ── */
+.checkbox__box {
+  display:         flex;
+  align-items:     center;
+  justify-content: center;
+  width:           18px;
+  height:          18px;
+  border-radius:   var(--radius-sm);
+  border:          2px solid var(--color-border);
+  background:      var(--color-bg-raised);
+  flex-shrink:     0;
+  transition:
+    background  var(--transition-fast),
+    border-color var(--transition-fast);
+  outline-offset: 2px;
+}
+.checkbox__box:focus-visible { outline: 2px solid var(--color-accent); }
+
+.checkbox--checked .checkbox__box,
+.checkbox--indeterminate .checkbox__box {
+  background:   var(--color-accent);
+  border-color: var(--color-accent);
+}
+
+.checkbox:not(.checkbox--checked):not(.checkbox--indeterminate) .checkbox__box:hover {
+  border-color: var(--color-accent);
+}
+
+/* ── Icon inside box ── */
+.checkbox__icon {
+  display:     flex;
+  align-items: center;
+  color: var(--color-text-heading);
+}
+
+/* ── Label ── */
+.checkbox__label {
+  font-size: 0.875rem;
+  color:     var(--color-text);
+}

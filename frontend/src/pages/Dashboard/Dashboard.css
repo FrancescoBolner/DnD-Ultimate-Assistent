@@ -1,0 +1,230 @@
+/* =============================================================
+   Dashboard
+   ============================================================= */
+
+/* ── Plugin grid ──
+   --widget-w is set in Dashboard.tsx based on gridColumns:
+     1 = Small  → 320px
+     2 = Medium → 460px
+     3 = Large  → 580px
+     4 = XLarge → 720px
+   auto-fill + minmax(W, W) keeps widgets the same fixed size
+   and drops to fewer columns when screen space runs out.
+── */
+.dashboard__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(var(--widget-w, 460px), 1fr));
+  grid-auto-rows: minmax(340px, auto);
+  gap: 16px;
+}
+
+/* Source slot while dragging — shows as a dashed placeholder */
+.dashboard__widget-wrap--source > * {
+  visibility: hidden;
+}
+.dashboard__widget-wrap--source {
+  border: 2px dashed var(--color-border);
+  border-radius: var(--radius-lg);
+  background: transparent;
+  min-height: 360px;
+}
+
+/* ── Edit mode ── */
+
+/* Blur plugin body content in edit mode so the drag UI is the focus */
+.dashboard__grid--edit .dashboard__widget-wrap:not(.dashboard__widget-wrap--source) .plugin__body {
+  filter: blur(3px);
+  pointer-events: none;
+  user-select: none;
+  opacity: 0.55;
+  transition: filter 0.2s, opacity 0.2s;
+}
+
+/* Edit-mode ghost add cell — green accent */
+.dashboard__grid--edit .dashboard__add-cell {
+  border-color: var(--color-success);
+  color: var(--color-success);
+}
+.dashboard__grid--edit .dashboard__add-cell:hover {
+  border-color: var(--color-success-hover);
+  background: var(--color-success-dim);
+}
+.dashboard__grid--edit .dashboard__add-icon,
+.dashboard__grid--edit .dashboard__add-text {
+  color: var(--color-success);
+}
+
+/* ── Fullscreen ── */
+.dashboard__fullscreen {
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.dashboard__fullscreen .plugin--fullscreen {
+  position: relative;
+  inset: unset;
+  flex: 1;
+}
+
+/* Screen plugin fullscreen: let height be driven by the display's aspect ratio */
+.dashboard__fullscreen:has(.plugin--fullscreen .scr-display-wrap) {
+  height: auto;
+}
+
+/* ── Popup container ── */
+.dashboard__popup {
+  position: fixed;
+  right: 16px;
+  z-index: 300;
+}
+
+/* ── Popup FAB (floating circle to add popup plugins) ── */
+.dashboard__popup-fab {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 310;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+.dashboard__popup-fab-btn {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--color-success);
+  border: none;
+  color: var(--color-bg-base);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: var(--shadow-lg);
+  transition: background var(--transition-fast), transform var(--transition-fast);
+}
+.dashboard__popup-fab-btn:hover {
+  background: var(--color-success-hover);
+  transform: scale(1.08);
+}
+.dashboard__popup-fab-options {
+  display: none;
+  flex-direction: column;
+  gap: 2px;
+  background: var(--color-bg-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 6px;
+  min-width: 160px;
+  box-shadow: var(--shadow-lg);
+  margin-bottom: 4px;
+  order: -1;
+}
+.dashboard__popup-fab:hover .dashboard__popup-fab-options {
+  display: flex;
+}
+.dashboard__popup-fab-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  border: none;
+  background: none;
+  color: var(--color-text);
+  font-size: 0.8125rem;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  text-align: left;
+}
+.dashboard__popup-fab-option:hover {
+  background: var(--color-bg-raised);
+}
+.dashboard__popup-fab-group-label {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  color: var(--color-text-muted);
+  padding: 4px 10px 2px;
+  margin-top: 2px;
+}
+.dashboard__popup-fab-group-label:first-child {
+  margin-top: 0;
+}
+
+/* ── Edit-mode: add-plugin ghost cell ── */
+.dashboard__add-cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 2px dashed var(--color-border);
+  border-radius: var(--radius-lg, 10px);
+  cursor: pointer;
+  position: relative;
+  transition: border-color 0.2s, background 0.2s;
+  min-height: 160px;
+}
+.dashboard__add-cell:hover {
+  border-color: var(--color-accent);
+  background: var(--color-accent-dim);
+}
+.dashboard__add-icon {
+  color: var(--color-text-muted);
+}
+.dashboard__add-text {
+  font-size: 0.8125rem;
+  color: var(--color-text-muted);
+}
+.dashboard__add-options {
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 6px;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 180px;
+  z-index: 10;
+  box-shadow: var(--shadow-lg);
+}
+.dashboard__add-cell:hover .dashboard__add-options {
+  display: flex;
+}
+.dashboard__add-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  border: none;
+  background: none;
+  color: var(--color-text);
+  font-size: 0.8125rem;
+  border-radius: var(--radius-sm, 4px);
+  cursor: pointer;
+  text-align: left;
+}
+.dashboard__add-option:hover {
+  background: var(--color-bg-hover);
+}
+
+/* ── Responsive ── */
+@media (max-width: 640px) {
+  .dashboard__grid {
+    grid-template-columns: 1fr;
+    grid-auto-rows: auto;
+    gap: 12px;
+  }
+  .dashboard__popup {
+    right: 8px;
+  }
+}

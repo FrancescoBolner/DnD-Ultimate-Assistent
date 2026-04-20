@@ -1,0 +1,62 @@
+/* =============================================================
+   SearchBar – building block
+   ============================================================= */
+
+.searchbar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  height: 36px;
+  padding: 0 10px;
+  background-color: var(--color-bg-raised);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  transition: border-color var(--transition-fast);
+}
+
+.searchbar:focus-within {
+  border-color: var(--color-accent);
+}
+
+.searchbar__icon {
+  color: var(--color-text-muted);
+  flex-shrink: 0;
+}
+
+.searchbar__input {
+  flex: 1;
+  height: 100%;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  outline: none;
+  color: var(--color-text);
+  font-size: 0.875rem;
+  font-family: inherit;
+  padding: 0;
+}
+
+.searchbar__input::placeholder {
+  color: var(--color-text-muted);
+  opacity: 0.6;
+}
+
+.searchbar__clear {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  background: none;
+  border: none;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+  flex-shrink: 0;
+  transition: background var(--transition-fast), color var(--transition-fast);
+}
+
+.searchbar__clear:hover {
+  background: var(--color-bg-base);
+  color: var(--color-text);
+}

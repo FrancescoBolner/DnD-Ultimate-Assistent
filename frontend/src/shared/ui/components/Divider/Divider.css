@@ -1,0 +1,46 @@
+/* =============================================================
+   Divider – horizontal or vertical section separator
+   ============================================================= */
+
+/* ── Horizontal ── */
+.divider--horizontal {
+  width:      100%;
+  height:     1px;
+  background: var(--color-border);
+  flex-shrink: 0;
+}
+
+.divider--horizontal.divider--labeled {
+  height:          auto;
+  background:      none;
+  display:         flex;
+  align-items:     center;
+  gap:             12px;
+}
+.divider--labeled::before,
+.divider--labeled::after {
+  content:    '';
+  flex:       1;
+  height:     1px;
+  background: var(--color-border);
+}
+
+.divider__label {
+  font-size:      0.7rem;
+  font-weight:    700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color:          var(--color-text-muted);
+  white-space:    nowrap;
+  flex-shrink:    0;
+}
+
+/* ── Vertical ── */
+.divider--vertical {
+  width:      1px;
+  height:     100%;
+  min-height: 1em;
+  background: var(--color-border);
+  flex-shrink: 0;
+  align-self:  stretch;
+}

@@ -1,0 +1,75 @@
+/* =============================================================
+   Slider (range input) with label/description/value
+   ============================================================= */
+
+.slider-field {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 0;
+  user-select: none;
+}
+
+.slider-field--disabled {
+  opacity: 0.45;
+}
+
+.slider-field__text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+  min-width: 0;
+}
+
+.slider-field__label {
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: var(--color-text-heading);
+}
+
+.slider-field__desc {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  line-height: 1.45;
+}
+
+.slider-field__control {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 220px;
+  flex-shrink: 0;
+}
+
+.slider-field__input {
+  width: 100%;
+  accent-color: var(--color-accent);
+  cursor: pointer;
+}
+
+.slider-field__input:disabled {
+  cursor: not-allowed;
+}
+
+.slider-field__value {
+  min-width: 44px;
+  text-align: right;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  font-family: var(--font-mono, monospace);
+}
+
+@media (max-width: 640px) {
+  .slider-field {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+
+  .slider-field__control {
+    width: 100%;
+  }
+}

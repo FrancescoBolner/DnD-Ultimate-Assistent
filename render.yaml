@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: dnd-assistant-backend
+    runtime: node
+    rootDir: backend
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DB_SSL
+        value: "true"
+      - key: JWT_ACCESS_EXPIRES
+        value: "15m"
+      - key: JWT_REFRESH_EXPIRES
+        value: "7d"
+      # Set these manually in Render dashboard (secret values):
+      # DB_HOST, DB_PORT, DB_USER, DB_PASSWORD, DB_NAME
+      # JWT_SECRET
+      # CORS_ORIGIN  →  your Vercel frontend URL

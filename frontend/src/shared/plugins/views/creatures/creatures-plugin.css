@@ -1,0 +1,90 @@
+/* =============================================================
+   Creatures Plugin – view-specific styles
+   (shares chr-row, chr-dmg, chr-popup, plugin-section etc.
+    from characters-plugin.css and plugin-view.css)
+   ============================================================= */
+
+/* ── Type badge ── */
+.cre-badge {
+  font-size:      0.6rem;
+  font-weight:    700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding:        1px 5px;
+  border-radius:  var(--radius-sm);
+  border:         1px solid;
+  flex-shrink:    0;
+  line-height:    1.6;
+}
+.cre-badge--npc    { color: #60a5fa; border-color: rgba(96,165,250,0.35); background: rgba(96,165,250,0.12); }
+.cre-badge--enemy  { color: #f87171; border-color: rgba(248,113,113,0.35); background: rgba(248,113,113,0.12); }
+.cre-badge--ally   { color: #34d399; border-color: rgba(52,211,153,0.35); background: rgba(52,211,153,0.12); }
+.cre-badge--beast  { color: #fb923c; border-color: rgba(251,146,60,0.35); background: rgba(251,146,60,0.12); }
+
+/* ── Type filter tabs strip ── */
+.cre-type-tabs {
+  display:   flex;
+  gap:       3px;
+  flex-wrap: wrap;
+  margin-bottom: 4px;
+}
+
+.cre-type-tab {
+  font-size:   0.7rem;
+  font-weight: 600;
+  padding:     3px 9px;
+  border-radius: var(--radius-sm);
+  border:      1px solid var(--color-border);
+  background:  transparent;
+  color:       var(--color-text-muted);
+  cursor:      pointer;
+  transition:  all var(--transition-fast);
+  line-height: 1.5;
+}
+.cre-type-tab:hover { border-color: var(--color-accent); color: var(--color-accent); }
+.cre-type-tab--active { background: var(--color-accent); border-color: var(--color-accent); color: #fff; }
+
+/* Type-colored active state */
+.cre-type-tab--npc.cre-type-tab--active    { background: #60a5fa; border-color: #60a5fa; color: #fff; }
+.cre-type-tab--enemy.cre-type-tab--active  { background: #f87171; border-color: #f87171; color: #fff; }
+.cre-type-tab--ally.cre-type-tab--active   { background: #34d399; border-color: #34d399; color: #fff; }
+.cre-type-tab--beast.cre-type-tab--active  { background: #fb923c; border-color: #fb923c; color: #fff; }
+
+/* Add button in the tabs strip */
+.cre-add-btn {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--color-accent) !important;
+  border-color: var(--color-accent) !important;
+}
+.cre-add-btn:hover { background: color-mix(in srgb, var(--color-accent) 10%, transparent) !important; }
+
+/* ── Widget row action buttons ── */
+.cre-row__actions {
+  display:    flex;
+  gap:        4px;
+  flex-shrink: 0;
+}
+.cre-row__actions button {
+  display:         flex;
+  align-items:     center;
+  justify-content: center;
+  width:           24px;
+  height:          24px;
+  border-radius:   var(--radius-sm);
+  border:          1px solid var(--color-border);
+  background:      var(--color-bg-raised);
+  cursor:          pointer;
+  color:           var(--color-text-muted);
+  transition:      color var(--transition-fast), border-color var(--transition-fast);
+}
+.cre-row__actions button:first-child:hover { color: var(--color-accent);  border-color: var(--color-accent); }
+.cre-row__actions button:last-child:hover  { color: var(--color-danger);  border-color: var(--color-danger); }
+
+/* Fullscreen card header action buttons (slightly smaller) */
+.chr-row--full .cre-row__actions button {
+  width:  22px;
+  height: 22px;
+}

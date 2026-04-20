@@ -1,0 +1,44 @@
+/* =============================================================
+   ui.css – centralised import of every UI component stylesheet
+   Import this once (e.g. in main.tsx) to get the full library,
+   OR import individual component CSS files for tree-shaken builds.
+   ============================================================= */
+
+/* ── Base components ── */
+@import './components/Button/Button.css';
+@import './components/Card/Card.css';
+@import './components/HpBar/Hpbar.css';
+@import './components/Input/Input.css';
+@import './components/List/List.css';
+@import './components/Modal/Modal.css';
+@import './components/SearchBar/SearchBar.css';
+@import './components/Select/Select.css';
+@import './components/Switch/Switch.css';
+@import './components/Textarea/Textarea.css';
+
+/* ── New primitive components ── */
+@import './components/Badge/Badge.css';
+@import './components/StatChip/StatChip.css';
+@import './components/StatBlock/StatBlock.css';
+@import './components/Avatar/Avatar.css';
+@import './components/Tag/Tag.css';
+@import './components/Spinner/Spinner.css';
+@import './components/Tooltip/Tooltip.css';
+@import './components/NumberStepper/NumberStepper.css';
+@import './components/Checkbox/Checkbox.css';
+@import './components/ComboSearch/ComboSearch.css';
+@import './components/ToggleList/ToggleList.css';
+@import './components/ProgressBar/ProgressBar.css';
+@import './components/Divider/Divider.css';
+
+/* ── Blocks (composite) ── */
+@import './blocks/StatRow/StatRow.css';
+@import './blocks/CombatStats/CombatStats.css';
+@import './blocks/EntityHeader/EntityHeader.css';
+@import './blocks/FilterBar/FilterBar.css';
+@import './blocks/CharacterCard/CharacterCard.css';
+@import './blocks/CreatureCard/CreatureCard.css';
+@import './blocks/ItemCard/ItemCard.css';
+@import './blocks/AbilityCard/AbilityCard.css';
+@import './blocks/EffectRow/EffectRow.css';
+@import './blocks/TopBar/TopBar.css';

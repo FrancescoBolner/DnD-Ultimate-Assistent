@@ -1,0 +1,25 @@
+/* =============================================================
+   EffectRow – active effects / conditions pill strip
+   ============================================================= */
+
+.effect-row {
+  display:     flex;
+  align-items: center;
+  gap:         6px;
+}
+
+.effect-row--wrap { flex-wrap: wrap; }
+
+.effect-row__empty {
+  font-size:  0.75rem;
+  color:      var(--color-text-muted);
+  font-style: italic;
+}
+
+/* Duration suffix inside a tag */
+.effect-row__duration {
+  font-size:   0.65rem;
+  font-weight: 500;
+  opacity:     0.75;
+  margin-left: 3px;
+}

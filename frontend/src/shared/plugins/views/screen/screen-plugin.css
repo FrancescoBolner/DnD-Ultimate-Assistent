@@ -1,0 +1,1077 @@
+/* =============================================================
+   Screen Plugin
+   ============================================================= */
+
+/* ── Root ── */
+.scr {
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+}
+
+/* ── Display mode (popup: read-only player view) ── */
+.scr--display {
+  align-items: stretch;
+}
+
+.scr__no-screen {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 120px;
+  color: var(--color-text-muted);
+  font-size: 0.875rem;
+  border: 1px dashed var(--color-border);
+  border-radius: var(--radius-sm);
+}
+
+/* ── Aspect-ratio display wrapper ── */
+.scr-display-wrap {
+  position: relative;
+  width: 100%;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  background: #0a0a0a;
+  border: 1px solid var(--color-border);
+  container-type: inline-size;
+  container-name: scrDisplay;
+}
+
+.scr-display {
+  width: 100%;
+  position: relative;
+  background-size: cover;
+  background-position: center;
+  overflow: hidden;
+  font-size: 2cqi;
+}
+
+/* Hide all scrollbars inside the display */
+.scr-display *,
+.scr-display *::-webkit-scrollbar {
+  scrollbar-width: none;
+}
+.scr-display *::-webkit-scrollbar {
+  display: none;
+}
+
+/* ── Grid presets ── */
+.scr-grid {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  gap: 2px;
+}
+
+/* 1-big: one full slot */
+.scr-grid--1-big {
+  grid-template-areas: "main";
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+}
+
+/* 2-half: two equal side by side */
+.scr-grid--2-half {
+  grid-template-areas: "left right";
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr;
+}
+
+/* 1+2: one big left + two stacked right */
+.scr-grid--1p2 {
+  grid-template-areas:
+    "main rt"
+    "main rb";
+  grid-template-columns: 2fr 1fr;
+  grid-template-rows: 1fr 1fr;
+}
+
+/* 4-grid: 2x2 */
+.scr-grid--4-grid {
+  grid-template-areas:
+    "tl tr"
+    "bl br";
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+}
+
+/* ── Slot ── */
+.scr-slot {
+  overflow: hidden;
+  position: relative;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: stretch;
+  pointer-events: none;
+}
+
+.scr-slot--interactive {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+.scr-slot--interactive:hover {
+  outline: 2px solid var(--color-accent);
+  outline-offset: -2px;
+}
+
+.scr-slot--selected {
+  outline: 2px solid var(--color-accent);
+  outline-offset: -2px;
+  background-color: rgba(var(--color-accent-rgb, 120 80 200) / 0.1);
+}
+
+.scr-slot__empty {
+  flex: 1;
+}
+
+/* ── Slot content types ── */
+.scr-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1em;
+  gap: 0.4em;
+  overflow: hidden;
+  font-size: inherit;
+}
+
+.scr-content--empty {
+  color: var(--color-text-muted);
+  font-size: 0.8em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+}
+
+/* Text */
+.scr-content--text {
+  gap: 0.4em;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.scr-text-title {
+  margin: 0;
+  font-size: 1.2em;
+  font-weight: 700;
+  color: var(--color-text);
+  line-height: 1.2;
+}
+
+.scr-text-body {
+  margin: 0;
+  font-size: 0.9em;
+  color: var(--color-text);
+  line-height: 1.5;
+  white-space: pre-wrap;
+}
+
+/* Semi-transparent background tint — per-element when show_text_bg is on */
+.scr-display-wrap--text-bg .scr-text-title,
+.scr-display-wrap--text-bg .scr-text-body {
+  background: rgba(0, 0, 0, 0.45);
+  border-radius: 0.3em;
+  padding: 0.2em 0.5em;
+  width: fit-content;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.scr-display-wrap--text-bg .scr-entity-info {
+  background: rgba(0, 0, 0, 0.45);
+  border-radius: 0.3em;
+  padding: 0.25em 0.5em;
+}
+
+.scr-display-wrap--text-bg .scr-list-row {
+  background: rgba(0, 0, 0, 0.45);
+  border-radius: 0.3em;
+  padding: 0.2em 0.5em;
+}
+
+.scr-display-wrap--text-bg .scr-content--plugin {
+  background: rgba(0, 0, 0, 0.45);
+  border-radius: 0.3em;
+}
+
+/* Image */
+.scr-content--image {
+  padding: 0;
+}
+
+.scr-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  padding: 0.3em;
+  box-sizing: border-box;
+}
+
+/* Entity (image + centred info) */
+.scr-content--entity {
+  padding: 0.5em;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4em;
+}
+
+.scr-entity-img-wrap {
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.scr-entity-img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  display: block;
+  border-radius: 4px;
+}
+
+.scr-entity-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25em;
+  width: 100%;
+}
+
+.scr-entity-name {
+  font-size: 1em;
+  font-weight: 700;
+  color: var(--color-text);
+  text-align: center;
+}
+
+.scr-entity-hpbar {
+  width: min(80%, 12em);
+}
+
+/* Entity list */
+.scr-content--entity-list {
+  align-items: stretch;
+  overflow-y: auto;
+  gap: 0.3em;
+}
+
+.scr-list-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  padding: 0.15em 0;
+  font-size: 0.85em;
+}
+
+.scr-list-img {
+  width: 1.8em;
+  height: 1.8em;
+  border-radius: 3px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.scr-list-name {
+  flex: 1;
+  color: var(--color-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.scr-list-hpbar {
+  width: 6em;
+  flex-shrink: 0;
+}
+
+/* Plugin snapshot (live embed) */
+.scr-content--plugin {
+  align-items: stretch;
+  justify-content: flex-start;
+  overflow: hidden;
+  padding: 0.3em 0.5em;
+  margin: 0.5em;
+  pointer-events: none;
+}
+
+.scr-plugin-inner {
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.scr-plugin-inner .plugin-view {
+  flex: 1;
+  min-height: 0;
+}
+
+/* Embedded plugin: strip shell chrome */
+.scr-plugin-embed {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
+/* ── Widget mode ── */
+.scr--widget {
+  gap: 8px;
+}
+
+/* ── Player widget: centered open button ── */
+.scr--widget-player {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.scr-player-open-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--color-text);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: color var(--transition-fast), border-color var(--transition-fast),
+              background var(--transition-fast);
+}
+
+.scr-player-open-btn:hover {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+  color: #fff;
+}
+
+.scr-mini-preview {
+  width: 100%;
+}
+
+.scr-widget-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+/* ── Status indicator ── */
+.scr-status {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+}
+
+.scr-status--live {
+  color: var(--color-success, #4caf50);
+}
+
+/* ── Push button ── */
+.scr-push-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  background: var(--color-accent);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity var(--transition-fast);
+}
+
+.scr-push-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.scr-push-btn:not(:disabled):hover {
+  opacity: 0.85;
+}
+
+/* ── Stop button ── */
+.scr-stop-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 10px;
+  border: 1px solid var(--color-danger, #ef4444);
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--color-danger, #ef4444);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background var(--transition-fast), color var(--transition-fast);
+}
+
+.scr-stop-btn:hover {
+  background: var(--color-danger, #ef4444);
+  color: #fff;
+}
+
+.scr-stop-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.scr-spin {
+  animation: scr-spin 1s linear infinite;
+}
+
+@keyframes scr-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ── Fullscreen controller layout ── */
+.scr--ctrl {
+  flex-direction: row;
+  gap: 16px;
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.scr-ctrl-left {
+  width: 320px;
+  min-width: 260px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  overflow-y: auto;
+}
+
+.scr-ctrl-right {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  overflow-y: auto;
+}
+
+/* ── Sections ── */
+.scr-section {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.scr-section--slot-editor {
+  border-top: 1px solid var(--color-border);
+  padding-top: 12px;
+}
+
+.scr-section__label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.scr-section__label--preview {
+  margin-bottom: 2px;
+}
+
+/* ── Preset bar ── */
+.scr-preset-bar {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.scr-preset-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 10px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--color-text-muted);
+  font-size: 0.75rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: color var(--transition-fast), border-color var(--transition-fast),
+              background var(--transition-fast);
+}
+
+.scr-preset-btn:hover {
+  color: var(--color-text);
+  border-color: var(--color-accent);
+}
+
+.scr-preset-btn--active {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+  color: #fff;
+}
+
+/* ── Aspect row ── */
+.scr-aspect-row {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.scr-aspect-btn {
+  padding: 4px 9px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--color-text-muted);
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: color var(--transition-fast), border-color var(--transition-fast),
+              background var(--transition-fast);
+}
+
+.scr-aspect-btn:hover {
+  color: var(--color-text);
+  border-color: var(--color-accent);
+}
+
+.scr-aspect-btn--active {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+  color: #fff;
+}
+
+/* ── Background input ── */
+.scr-bg-input {
+  width: 100%;
+  background: var(--color-bg-base);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: 5px 10px;
+  font-size: 0.8125rem;
+  color: var(--color-text);
+  outline: none;
+  transition: border-color var(--transition-fast);
+  box-sizing: border-box;
+}
+
+.scr-bg-input:focus {
+  border-color: var(--color-accent);
+}
+
+/* ── Slot hint ── */
+.scr-slot-hint {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  font-style: italic;
+  padding: 8px 0;
+}
+
+/* ── Slot editor ── */
+.scr-slot-editor {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.scr-type-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.scr-type-tab {
+  padding: 3px 8px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--color-text-muted);
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: color var(--transition-fast), border-color var(--transition-fast),
+              background var(--transition-fast);
+}
+
+.scr-type-tab:hover {
+  color: var(--color-text);
+  border-color: var(--color-accent);
+}
+
+.scr-type-tab--active {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+  color: #fff;
+}
+
+/* ── Slot content forms ── */
+.scr-form {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.scr-form__input,
+.scr-form__select,
+.scr-form__textarea {
+  width: 100%;
+  background: var(--color-bg-base);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: 5px 10px;
+  font-size: 0.8125rem;
+  color: var(--color-text);
+  outline: none;
+  transition: border-color var(--transition-fast);
+  box-sizing: border-box;
+}
+
+.scr-form__input:focus,
+.scr-form__select:focus,
+.scr-form__textarea:focus {
+  border-color: var(--color-accent);
+}
+
+.scr-form__textarea {
+  resize: vertical;
+  font-family: inherit;
+  line-height: 1.5;
+}
+
+.scr-form__img-preview {
+  max-height: 80px;
+  object-fit: cover;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border);
+}
+
+.scr-form__hint {
+  margin: 0;
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  font-style: italic;
+}
+
+/* ── Push row (fullscreen) ── */
+.scr-ctrl-push-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 8px 0;
+  border-top: 1px solid var(--color-border);
+}
+
+.scr-ctrl-push-row__actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ── Widget footer actions ── */
+.scr-widget-footer__actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ── Open screen button ── */
+.scr-open-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 10px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--color-text-muted);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  text-decoration: none;
+  cursor: pointer;
+  transition: color var(--transition-fast), border-color var(--transition-fast);
+}
+
+.scr-open-btn:hover {
+  color: var(--color-text);
+  border-color: var(--color-accent);
+}
+
+/* ── Kind buttons (entity type selector) ── */
+.scr-kind-btn {
+  padding: 3px 8px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--color-text-muted);
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: color var(--transition-fast), border-color var(--transition-fast),
+              background var(--transition-fast);
+}
+
+.scr-kind-btn:hover {
+  color: var(--color-text);
+  border-color: var(--color-accent);
+}
+
+.scr-kind-btn--active {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+  color: #fff;
+}
+
+/* ── Entity list entries (editor) ── */
+.scr-list-entries {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.scr-list-entry {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 6px;
+  background: var(--color-bg-base);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  font-size: 0.8rem;
+}
+
+.scr-list-entry__name {
+  flex: 1;
+  color: var(--color-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.scr-list-entry__type {
+  font-size: 0.7rem;
+  color: var(--color-text-muted);
+  text-transform: capitalize;
+}
+
+.scr-list-entry__hp {
+  padding: 1px 5px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--color-text-muted);
+  font-size: 0.65rem;
+  cursor: pointer;
+  transition: color var(--transition-fast), border-color var(--transition-fast);
+}
+
+.scr-list-entry__hp:hover {
+  border-color: var(--color-accent);
+  color: var(--color-text);
+}
+
+.scr-list-entry__hp--on {
+  color: var(--color-success, #4caf50);
+  border-color: var(--color-success, #4caf50);
+}
+
+.scr-list-entry__remove {
+  display: flex;
+  align-items: center;
+  padding: 2px;
+  border: none;
+  background: transparent;
+  color: var(--color-text-muted);
+  cursor: pointer;
+}
+
+.scr-list-entry__remove:hover {
+  color: var(--color-danger, #ef4444);
+}
+
+/* ── Form row helper ── */
+.scr-form__row {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+/* ── Name toggle button (entity list editor) ── */
+.scr-list-entry__hp { /* reused for Name button via same class pattern */ }
+
+/* ── Preset save/load buttons (bottom of scr-ctrl-left) ── */
+.scr-preset-btns {
+  display: flex;
+  gap: 6px;
+  padding-top: 10px;
+  border-top: 1px solid var(--color-border);
+  margin-top: auto;
+}
+
+.scr-preset-btns__btn {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding: 6px 10px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--color-text-muted);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: color var(--transition-fast), border-color var(--transition-fast),
+              background var(--transition-fast);
+}
+
+.scr-preset-btns__btn:hover {
+  color: var(--color-text);
+  border-color: var(--color-accent);
+  background: rgba(var(--color-accent-rgb, 120 80 200) / 0.08);
+}
+
+/* ── Screen preset panel overlay ── */
+.scr-panel-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 4000;
+  background: rgba(0, 0, 0, 0.65);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.scr-panel {
+  background: var(--color-bg-elevated, var(--color-bg-base));
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md, var(--radius-sm));
+  width: min(860px, 92vw);
+  max-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.55);
+}
+
+.scr-panel__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--color-border);
+  flex-shrink: 0;
+}
+
+.scr-panel__title {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.scr-panel__close {
+  display: flex;
+  align-items: center;
+  padding: 4px;
+  border: none;
+  background: transparent;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+  transition: color var(--transition-fast);
+}
+
+.scr-panel__close:hover { color: var(--color-text); }
+
+.scr-panel__search {
+  margin: 10px 16px 0;
+  padding: 6px 12px;
+  background: var(--color-bg-base);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  font-size: 0.8125rem;
+  color: var(--color-text);
+  outline: none;
+  flex-shrink: 0;
+  transition: border-color var(--transition-fast);
+}
+
+.scr-panel__search:focus { border-color: var(--color-accent); }
+
+.scr-panel__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 12px;
+  padding: 12px 16px 16px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.scr-panel__empty {
+  grid-column: 1 / -1;
+  text-align: center;
+  color: var(--color-text-muted);
+  font-size: 0.875rem;
+  font-style: italic;
+  padding: 24px 0;
+  margin: 0;
+}
+
+/* ── Preset card ── */
+.scr-preset-card {
+  position: relative;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  background: var(--color-bg-base);
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.scr-preset-card:hover {
+  border-color: var(--color-accent);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+}
+
+.scr-preset-card--saving {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+/* "Save as new" card */
+.scr-preset-card--new {
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 16px;
+  min-height: 130px;
+  border-style: dashed;
+}
+
+.scr-preset-card__hint {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  text-align: center;
+}
+
+.scr-preset-card__new-name {
+  width: 100%;
+  background: var(--color-bg-base);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: 4px 8px;
+  font-size: 0.8125rem;
+  color: var(--color-text);
+  text-align: center;
+  outline: none;
+  box-sizing: border-box;
+  transition: border-color var(--transition-fast);
+}
+
+.scr-preset-card__new-name:focus { border-color: var(--color-accent); }
+
+.scr-preset-card__save-btn {
+  padding: 4px 16px;
+  border: 1px solid var(--color-accent);
+  border-radius: var(--radius-sm);
+  background: var(--color-accent);
+  color: #fff;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity var(--transition-fast);
+}
+
+.scr-preset-card__save-btn:hover { opacity: 0.85; }
+
+/* Delete button (top-right) */
+.scr-preset-card__del {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  padding: 3px;
+  border: none;
+  background: rgba(0, 0, 0, 0.55);
+  color: var(--color-text-muted);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: color var(--transition-fast), background var(--transition-fast);
+}
+
+.scr-preset-card__del:hover {
+  background: var(--color-danger, #ef4444);
+  color: #fff;
+}
+
+/* Preview thumbnail */
+.scr-preset-card__preview {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  pointer-events: none;
+  flex-shrink: 0;
+}
+
+.scr-preset-card__preview .scr-display-wrap {
+  border: none;
+  border-radius: 0;
+}
+
+/* Name row */
+.scr-preset-card__name {
+  padding: 5px 8px;
+  font-size: 0.8rem;
+  color: var(--color-text);
+  text-align: center;
+  border-top: 1px solid var(--color-border);
+  flex-shrink: 0;
+}
+
+.scr-preset-card__name > span {
+  display: block;
+  cursor: text;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: color var(--transition-fast);
+}
+
+.scr-preset-card__name > span:hover { color: var(--color-accent); }
+
+.scr-preset-card__name-input {
+  width: 100%;
+  background: transparent;
+  border: 1px solid var(--color-accent);
+  border-radius: 3px;
+  padding: 2px 4px;
+  font-size: 0.8rem;
+  color: var(--color-text);
+  text-align: center;
+  outline: none;
+  box-sizing: border-box;
+}
