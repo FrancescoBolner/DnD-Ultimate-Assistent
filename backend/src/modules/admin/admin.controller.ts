@@ -52,7 +52,7 @@ export async function getCampaigns(req: Request, res: Response, next: NextFuncti
 
 export async function getImages(req: Request, res: Response, next: NextFunction) {
   try {
-    const protocol = req.protocol;
+    const protocol = (req.get('x-forwarded-proto') ?? req.protocol).split(',')[0].trim();
     const host = req.get('host') ?? 'localhost:3000';
     const BACKEND_ORIGIN = `${protocol}://${host}`;
     const publicRoot = path.resolve(__dirname, '../../../../frontend/public');

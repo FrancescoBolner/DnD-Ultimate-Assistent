@@ -22,6 +22,7 @@ import adminRoutes from './modules/admin/admin.routes';
 import { errorHandler } from './core/middleware/error.middleware';
 
 const app = express();
+app.set('trust proxy', 1); // trust Render's reverse proxy for req.protocol / req.ip
 
 function isAllowedOrigin(origin?: string): boolean {
   if (!origin) return true;
