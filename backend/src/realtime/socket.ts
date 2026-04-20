@@ -111,6 +111,7 @@ export function emitCreatureUpdated(
     ac: number;
     speed: number;
     image: string | null;
+    sheet_image: string | null;
     notes: string | null;
     tags: string[] | null;
     race: string | null;
