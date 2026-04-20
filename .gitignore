@@ -34,3 +34,9 @@ CLAUDE/
 backend/.env
 frontend/.env
 *.env.local
+
+# DB exports
+backend/src/db/*_export.sql
+backend/src/db/csv_export/
+backend/import-schema.mjs
+backend/tidb-ca.pem
