@@ -324,10 +324,10 @@ export function CampaignProvider({ children }: { children: ReactNode }) {
     const plugin = allCampaignPlugins.find(w => w.slug === slug);
     if (!plugin) return;
     const newConfig: Record<string, unknown> = { ...(plugin.config ?? {}), popup: enabled };
-    // When enabling popup, inherit popup_scale from any other popup-enabled plugin that already has it
+    // When enabling popup, inherit popup_scale from any plugin that already has it set
     if (enabled && typeof newConfig.popup_scale !== 'number') {
       const existingScale = allCampaignPlugins.find(
-        p => p.slug !== slug && p.config?.popup === true && typeof p.config?.popup_scale === 'number',
+        p => p.slug !== slug && typeof p.config?.popup_scale === 'number',
       )?.config?.popup_scale;
       if (typeof existingScale === 'number') newConfig.popup_scale = existingScale;
     }

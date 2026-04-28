@@ -71,10 +71,13 @@ export async function meHandler(req: Request, res: Response, next: NextFunction)
 
 /* ── Cookie helpers ── */
 function cookieOpts() {
+  const isProd = process.env.NODE_ENV === 'production';
   return {
     httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
-    sameSite: 'lax' as const,
+    secure: isProd,
+    // 'none' is required for cross-site fetch (Vercel → Render). Must pair with secure:true.
+    // Fall back to 'lax' in dev so cookies work without HTTPS.
+    sameSite: (isProd ? 'none' : 'lax') as 'none' | 'lax',
     path: '/api/auth',
     maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
   };
