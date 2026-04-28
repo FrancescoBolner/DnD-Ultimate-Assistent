@@ -63,15 +63,19 @@ export async function getCampaignSettingsHandler(req: AuthRequest, res: Response
     ]);
     const pluginDefinitions = settingsService.getPluginDefinitions();
 
-    // Players receive only non-DM plugins explicitly visible to players.
+    // Players receive non-DM plugins that are visible (widget/fullscreen) OR need a hidden bridge.
     const visiblePlugins = isDm
       ? plugins
       : plugins.filter((p) => {
           if (p.is_dm_only) return false;
-          const cfg = typeof p.config === 'string'
+          const cfg = (typeof p.config === 'string'
             ? (() => { try { return JSON.parse(p.config as string); } catch { return null; } })()
-            : p.config;
-          return (cfg as Record<string, unknown> | null)?.visible_to_players !== false;
+            : p.config) as Record<string, unknown> | null;
+          // Visible via widget or fullscreen
+          if (cfg?.visible_to_players !== false || cfg?.fullscreen_to_players !== false) return true;
+          // Always include if plugin plays audio on player devices (needs hidden audio bridge)
+          if (cfg?.play_on_player_device === true) return true;
+          return false;
         });
 
     res.json({ settings, plugins: visiblePlugins, pluginDefinitions, campaign });

@@ -181,3 +181,43 @@ export function onMapRangeMarksUpdated(
   socket.on('map:rangeMarksUpdated', listener);
   return () => socket.off('map:rangeMarksUpdated', listener);
 }
+
+/* ── Soundboard events ──────────────────────────────────────── */
+
+export interface SoundboardUpdatedPayload { campaignId: number }
+export interface SoundboardPlayPayload    { campaignId: number; soundId: number; volume: number }
+export interface SoundboardStopPayload    { campaignId: number; soundId: number }
+
+/** Listen for soundboard CRUD changes (list refresh). */
+export function onSoundboardUpdated(
+  listener: (payload: SoundboardUpdatedPayload) => void,
+): () => void {
+  socket.on('soundboard:updated', listener);
+  return () => socket.off('soundboard:updated', listener);
+}
+
+/** Listen for a remote play event (relayed from another client). */
+export function onSoundboardPlay(
+  listener: (payload: SoundboardPlayPayload) => void,
+): () => void {
+  socket.on('soundboard:play', listener);
+  return () => socket.off('soundboard:play', listener);
+}
+
+/** Listen for a remote stop event (relayed from another client). */
+export function onSoundboardStop(
+  listener: (payload: SoundboardStopPayload) => void,
+): () => void {
+  socket.on('soundboard:stop', listener);
+  return () => socket.off('soundboard:stop', listener);
+}
+
+/** Emit a play trigger — server relays to all OTHER clients in the campaign room. */
+export function emitSoundPlayTrigger(campaignId: number, soundId: number, volume: number): void {
+  socket.emit('soundboard:play:trigger', { campaignId, soundId, volume });
+}
+
+/** Emit a stop trigger — server relays to all OTHER clients in the campaign room. */
+export function emitSoundStopTrigger(campaignId: number, soundId: number): void {
+  socket.emit('soundboard:stop:trigger', { campaignId, soundId });
+}

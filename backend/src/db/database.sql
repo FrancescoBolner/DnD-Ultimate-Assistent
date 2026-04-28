@@ -38,6 +38,7 @@
 -- -------------------------------------------------------------
 -- DROP  (reverse dependency order)
 -- -------------------------------------------------------------
+DROP TABLE IF EXISTS `soundboard_sounds`;
 DROP TABLE IF EXISTS `map_range_marks`;
 DROP TABLE IF EXISTS `map_entities`;
 DROP TABLE IF EXISTS `screen_presets`;
@@ -412,6 +413,25 @@ CREATE TABLE `map_range_marks` (
     `created_at`  DATETIME      NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (`id`),
     CONSTRAINT `fk_rm_map` FOREIGN KEY (`map_id`) REFERENCES `map`(`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+-- =============================================================
+-- SOUNDBOARD
+-- =============================================================
+
+CREATE TABLE `soundboard_sounds` (
+    `id`          INT UNSIGNED  NOT NULL AUTO_INCREMENT,
+    `campaign_id` INT UNSIGNED  NOT NULL,
+    `name`        VARCHAR(150)  NOT NULL,
+    `url`         VARCHAR(500)  NOT NULL,
+    `icon`        VARCHAR(500)  NULL,
+    `volume`      FLOAT         NOT NULL DEFAULT 1.0,
+    `show_in_popup` TINYINT(1)  NOT NULL DEFAULT 1,
+    `created_at`  DATETIME      NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `updated_at`  DATETIME      NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (`id`),
+    CONSTRAINT `fk_sounds_campaign` FOREIGN KEY (`campaign_id`) REFERENCES `campaigns`(`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /*

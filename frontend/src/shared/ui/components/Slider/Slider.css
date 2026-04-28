@@ -20,7 +20,7 @@
   flex-direction: column;
   gap: 2px;
   flex: 1;
-  min-width: 0;
+  max-width: 0;
 }
 
 .slider-field__label {

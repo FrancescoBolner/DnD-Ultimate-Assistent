@@ -18,9 +18,10 @@ export interface PluginDefinition {
 export const PLUGIN_REGISTRY: PluginDefinition[] = [
   { slug: 'creatures',  label: 'Creatures',  description: 'Manage NPCs, enemies and allies',         icon: null, is_dm_only: false, category: 'core' },
   { slug: 'characters', label: 'Characters', description: 'Manage player characters',                icon: null, is_dm_only: false, category: 'core' },
-  { slug: 'combat',     label: 'Combat',     description: 'Initiative tracker and combat management', icon: null, is_dm_only: false, category: 'addon' },
-  { slug: 'map',        label: 'Map',        description: 'Interactive map viewer with tokens',        icon: null, is_dm_only: false, category: 'addon' },
-  { slug: 'screen',     label: 'Screen',     description: 'Display visual content to players',         icon: null, is_dm_only: false, category: 'addon' },
+  { slug: 'combat',      label: 'Combat',      description: 'Initiative tracker and combat management', icon: null, is_dm_only: false, category: 'addon' },
+  { slug: 'map',         label: 'Map',         description: 'Interactive map viewer with tokens',        icon: null, is_dm_only: false, category: 'addon' },
+  { slug: 'screen',      label: 'Screen',      description: 'Display visual content to players',         icon: null, is_dm_only: false, category: 'addon' },
+  { slug: 'soundboard',  label: 'Soundboard',  description: 'Play ambient sounds and music for your session', icon: null, is_dm_only: false, category: 'addon' },
 ];
 
 export const CORE_PLUGIN_SLUGS = PLUGIN_REGISTRY.filter(p => p.category === 'core').map(p => p.slug);

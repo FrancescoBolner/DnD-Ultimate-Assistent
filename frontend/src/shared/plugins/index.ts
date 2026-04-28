@@ -5,6 +5,7 @@ import { CreaturesPlugin }  from './views/creatures/CreaturesPlugin';
 import { CombatPlugin }     from './views/combat/CombatPlugin';
 import { MapPlugin }        from './views/map/MapPlugin';
 import { ScreenPlugin }     from './views/screen/ScreenPlugin';
+import { SoundboardPlugin } from './views/soundboard/SoundboardPlugin';
 
 export { default as PluginShell }       from './PluginShell';
 export { default as PluginPlaceholder } from './PluginPlaceholder';
@@ -18,6 +19,7 @@ export const pluginRegistry: Record<PluginSlug, ComponentType<PluginComponentPro
   combat:     CombatPlugin,
   map:        MapPlugin,
   screen:     ScreenPlugin,
+  soundboard: SoundboardPlugin,
 };
 
 /**
@@ -30,6 +32,7 @@ export const pluginSupportedModes: Partial<Record<PluginSlug, PluginViewMode[]>>
   combat:     ['widget', 'fullscreen', 'popup'],
   map:        ['widget', 'fullscreen', 'popup'],
   screen:     ['widget', 'fullscreen', 'popup'],
+  soundboard: ['widget', 'fullscreen', 'popup'],
 };
 
 /** Returns true if the plugin supports the given view mode. */

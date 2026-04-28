@@ -83,7 +83,7 @@ export default function PluginShell({ slug, viewMode, children }: PluginShellPro
     };
     document.addEventListener('mousemove', onMove);
     document.addEventListener('mouseup', onUp);
-  }, []);
+  }, [setPopupPos]);
 
   /* ════════════════════════════════════════
      POPUP MODE — bubble or open panel

@@ -4,6 +4,7 @@ import { useCampaign } from '../../app/providers/useCampaign';
 import { useUI }       from '../../app/providers/useUI';
 import { useAuth }     from '../../app/providers/useAuth';
 import { pluginRegistry, supportsMode } from '../../shared/plugins';
+import { SoundboardPlugin } from '../../shared/plugins/views/soundboard/SoundboardPlugin';
 import { pluginLabelMap, pluginIconMap } from '../../shared/icons/pluginIcons';
 import type { PluginSlug } from '../../shared/types';
 import Vault from '../../shared/layout/vault';
@@ -64,6 +65,10 @@ export default function DashboardPage() {
 
   return (
     <>
+      {/* Hidden soundboard bridge — keeps socket listeners alive even with no visible view */}
+      {allEnabledSlugs.includes('soundboard') && (
+        <SoundboardPlugin viewMode="hidden" />
+      )}
       {/* Fullscreen plugin takes over content area */}
       {fullscreenPlugin ? (
         <div className="dashboard__fullscreen">

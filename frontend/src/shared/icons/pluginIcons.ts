@@ -1,5 +1,5 @@
 import {
-  Skull, Users, Swords, Monitor, Map,
+  Skull, Users, Swords, Monitor, Map, Music2,
   type LucideIcon,
 } from 'lucide-react';
 import type { PluginSlug } from '../types';
@@ -11,6 +11,7 @@ export const pluginIconMap: Record<PluginSlug, LucideIcon> = {
   combat:     Swords,
   map:        Map,
   screen:     Monitor,
+  soundboard: Music2,
 };
 
 export const pluginLabelMap: Record<PluginSlug, string> = {
@@ -19,4 +20,5 @@ export const pluginLabelMap: Record<PluginSlug, string> = {
   combat:     'Combat',
   map:        'Map',
   screen:     'Screen',
+  soundboard: 'Soundboard',
 };

@@ -17,6 +17,7 @@ import itemRoutes from './modules/plugins/core/items/items.routes';
 import combatRoutes from './modules/plugins/addon/combat/combat.routes';
 import screenRoutes from './modules/plugins/addon/screen/screen.routes';
 import mapRoutes from './modules/plugins/addon/map/map.routes';
+import soundboardRoutes from './modules/plugins/addon/soundboard/soundboard.routes';
 import settingsRoutes from './modules/settings/settings.routes';
 import adminRoutes from './modules/admin/admin.routes';
 import { errorHandler } from './core/middleware/error.middleware';
@@ -66,6 +67,7 @@ app.use('/api/items', itemRoutes);
 app.use('/api/combat', combatRoutes);
 app.use('/api/screens', screenRoutes);
 app.use('/api/maps', mapRoutes);
+app.use('/api/soundboard', soundboardRoutes);
 app.use('/api/settings', settingsRoutes);
 app.use('/api/admin', adminRoutes);
 

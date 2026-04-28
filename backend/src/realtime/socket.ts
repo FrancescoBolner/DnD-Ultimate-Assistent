@@ -67,6 +67,23 @@ export function createSocketServer(app: Application): http.Server {
     }) => {
       socket.to(`campaign:${data.campaignId}`).emit('map:entity:move:live', data);
     });
+
+    // Soundboard — relay play trigger to all OTHER clients in the room
+    socket.on('soundboard:play:trigger', (data: {
+      campaignId: number;
+      soundId: number;
+      volume: number;
+    }) => {
+      socket.to(`campaign:${data.campaignId}`).emit('soundboard:play', data);
+    });
+
+    // Soundboard — relay stop trigger to all OTHER clients in the room
+    socket.on('soundboard:stop:trigger', (data: {
+      campaignId: number;
+      soundId: number;
+    }) => {
+      socket.to(`campaign:${data.campaignId}`).emit('soundboard:stop', data);
+    });
   });
 
   return httpServer;
@@ -160,4 +177,10 @@ export function emitMapEntitiesUpdated(campaignId: number, mapId: number): void 
 export function emitMapRangeMarksUpdated(campaignId: number, mapId: number): void {
   if (!io) return;
   io.to(`campaign:${campaignId}`).emit('map:rangeMarksUpdated', { campaignId, mapId });
+}
+
+/** Broadcast that the soundboard sound list changed (create/update/delete). */
+export function emitSoundboardUpdated(campaignId: number): void {
+  if (!io) return;
+  io.to(`campaign:${campaignId}`).emit('soundboard:updated', { campaignId });
 }

@@ -311,6 +311,20 @@ const SCHEMA = [
     CONSTRAINT \`fk_notes_user\`     FOREIGN KEY (\`user_id\`)     REFERENCES \`users\`(\`id\`)     ON DELETE CASCADE,
     CONSTRAINT \`fk_notes_char\`     FOREIGN KEY (\`character_id\`) REFERENCES \`characters\`(\`id\`) ON DELETE SET NULL
   ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci`,
+
+  `CREATE TABLE IF NOT EXISTS \`soundboard_sounds\` (
+    \`id\`          INT UNSIGNED  NOT NULL AUTO_INCREMENT,
+    \`campaign_id\` INT UNSIGNED  NOT NULL,
+    \`name\`        VARCHAR(150)  NOT NULL,
+    \`url\`         VARCHAR(500)  NOT NULL,
+    \`icon\`        VARCHAR(500)  NULL,
+    \`volume\`      FLOAT         NOT NULL DEFAULT 1.0,
+    \`show_in_popup\` TINYINT(1)  NOT NULL DEFAULT 1,
+    \`created_at\`  DATETIME      NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    \`updated_at\`  DATETIME      NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (\`id\`),
+    CONSTRAINT \`fk_sounds_campaign\` FOREIGN KEY (\`campaign_id\`) REFERENCES \`campaigns\`(\`id\`) ON DELETE CASCADE
+  ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci`,
 ];
 
 async function seedDb(): Promise<void> {

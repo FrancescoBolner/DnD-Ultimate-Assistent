@@ -19,9 +19,13 @@ function rewriteLocalhostInJson(text: string): string {
   if (host === 'localhost' || host === '127.0.0.1') return text;
   if (!text.includes('localhost') && !text.includes('127.0.0.1')) return text;
   const backendOrigin = API_BASE.replace(/\/api$/, ''); // e.g. https://dnd-ultimate-assistent.onrender.com
+  const frontendOrigin = window.location.origin;        // e.g. https://dnd-ultimate-assistent.vercel.app
   return text.replace(
     /http:\/\/(localhost|127\.0\.0\.1)(:\d+)?/g,
-    () => backendOrigin,
+    (_match, _h, port) => {
+      // Port 3000 is the backend; any other port (e.g. 5173) is the frontend dev server.
+      return port === ':3000' ? backendOrigin : frontendOrigin;
+    },
   );
 }
 
@@ -35,11 +39,19 @@ function normalizeBodyUrls(text: string): string {
   const host = window.location.hostname;
   if (host === 'localhost' || host === '127.0.0.1') return text;
   const backendOrigin = API_BASE.replace(/\/api$/, '');
-  const escaped = backendOrigin.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-  return text.replace(
-    new RegExp(escaped, 'g'),
-    'http://localhost:3000',
-  );
+  const frontendOrigin = window.location.origin;
+
+  // Normalise backend-origin URLs → http://localhost:3000
+  const escapedBackend = backendOrigin.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  let result = text.replace(new RegExp(escapedBackend, 'g'), 'http://localhost:3000');
+
+  // Normalise frontend-origin URLs → http://localhost:5173
+  if (frontendOrigin !== backendOrigin) {
+    const escapedFrontend = frontendOrigin.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    result = result.replace(new RegExp(escapedFrontend, 'g'), 'http://localhost:5173');
+  }
+
+  return result;
 }
 
 /** Returns the backend origin (e.g. http://localhost:3000) without the /api suffix */

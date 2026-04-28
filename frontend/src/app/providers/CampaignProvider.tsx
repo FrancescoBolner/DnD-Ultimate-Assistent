@@ -184,12 +184,21 @@ export function CampaignProvider({ children }: { children: ReactNode }) {
   }, [allCampaignPlugins, isDm, pluginOrder]);
 
   /* ── All globally enabled slugs (any mode) ── */
+  /* Includes a plugin if it's enabled AND accessible via widget/fullscreen OR needs a hidden bridge */
   const allEnabledSlugs: PluginSlug[] = useMemo(() => {
     return allCampaignPlugins
       .filter(w => w.is_enabled)
-      .filter(canPlayerSeePlugin)
+      .filter(w => {
+        if (isDm) return true;
+        if (w.is_dm_only) return false;
+        // Include if widget OR fullscreen is visible to players (views are independent)
+        if (w.config?.visible_to_players !== false || w.config?.fullscreen_to_players !== false) return true;
+        // Always include if plugin plays audio on player devices (needs hidden audio bridge)
+        if (w.config?.play_on_player_device === true) return true;
+        return false;
+      })
       .map(w => w.slug as PluginSlug);
-  }, [allCampaignPlugins, canPlayerSeePlugin]);
+  }, [allCampaignPlugins, isDm]);
 
   /* ── Derive sidebar plugins: DM uses fullscreen flag; players use fullscreen_to_players independently ── */
   const sidebarPlugins: PluginSlug[] = useMemo(() => {

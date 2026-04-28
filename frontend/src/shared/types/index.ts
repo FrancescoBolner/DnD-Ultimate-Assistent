@@ -173,15 +173,29 @@ export interface Item {
   is_attuned: boolean;
 }
 
+// ── Soundboard ──
+export interface Sound {
+  id: number;
+  campaign_id: number;
+  name: string;
+  url: string;
+  icon: string | null;
+  volume: number;
+  show_in_popup?: boolean;
+  created_at: string;
+  updated_at: string;
+}
+
 // ── Plugin system ──
 export type PluginSlug =
   | 'creatures'
   | 'characters'
   | 'combat'
   | 'map'
-  | 'screen';
+  | 'screen'
+  | 'soundboard';
 
-export type PluginViewMode = 'widget' | 'fullscreen' | 'popup';
+export type PluginViewMode = 'widget' | 'fullscreen' | 'popup' | 'hidden';
 
 // ── Screen plugin types ──
 export type ScreenPreset  = '1-big' | '2-half' | '1+2' | '4-grid';

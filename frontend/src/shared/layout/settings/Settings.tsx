@@ -737,13 +737,15 @@ export default function Settings() {
 
                 {/* ─── Per-plugin settings ─── */}
                 {(() => {
-                  const charData   = plugins.find(p => p.slug === 'characters');
-                  const combatData = plugins.find(p => p.slug === 'combat');
-                  const mapData    = plugins.find(p => p.slug === 'map');
-                  if (!charData?.is_enabled && !combatData?.is_enabled && !mapData?.is_enabled) return null;
-                  const cfg        = charData?.config ?? {};
-                  const combatCfg  = combatData?.config ?? {};
-                  const mapCfg     = mapData?.config ?? {};
+                  const charData       = plugins.find(p => p.slug === 'characters');
+                  const combatData     = plugins.find(p => p.slug === 'combat');
+                  const mapData        = plugins.find(p => p.slug === 'map');
+                  const soundboardData = plugins.find(p => p.slug === 'soundboard');
+                  if (!charData?.is_enabled && !combatData?.is_enabled && !mapData?.is_enabled && !soundboardData?.is_enabled) return null;
+                  const cfg            = charData?.config ?? {};
+                  const combatCfg      = combatData?.config ?? {};
+                  const mapCfg         = mapData?.config ?? {};
+                  const soundboardCfg  = soundboardData?.config ?? {};
                   return (
                     <Section title="Plugin Settings">
                       <p className="settings__section-intro">
@@ -841,6 +843,29 @@ export default function Settings() {
                             onChange={v => togglePluginConfig('map', 'show_marks_by_default', v)}
                             label="See mark info"
                             description="When on, hovering over a location marker shows its name and description."
+                          />
+                        </div>
+                      )}
+                      {soundboardData?.is_enabled && (
+                        <div className="settings__plugin-config-group">
+                          <h4 className="settings__plugin-config-name">Soundboard</h4>
+                          <Switch
+                            checked={soundboardCfg.players_can_manage === true}
+                            onChange={v => togglePluginConfig('soundboard', 'players_can_manage', v)}
+                            label="Players can manage sounds"
+                            description="When on, players can add, edit and delete sounds."
+                          />
+                          <Switch
+                            checked={soundboardCfg.show_search_in_popup !== false}
+                            onChange={v => togglePluginConfig('soundboard', 'show_search_in_popup', v)}
+                            label="Show search bar in popup"
+                            description="Display the search bar in the player-facing popup view."
+                          />
+                          <Switch
+                            checked={soundboardCfg.play_on_player_device === true}
+                            onChange={v => togglePluginConfig('soundboard', 'play_on_player_device', v)}
+                            label="Play sound on player device"
+                            description="When on, playing a sound broadcasts it via socket and plays it on all connected clients."
                           />
                         </div>
                       )}
