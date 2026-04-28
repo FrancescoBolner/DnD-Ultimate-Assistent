@@ -63,3 +63,19 @@ export async function logout(): Promise<void> {
     setAccessToken(null);
   }
 }
+
+export async function forgotPassword(email: string): Promise<void> {
+  await api('/auth/forgot-password', {
+    method: 'POST',
+    body: { email },
+    noAuth: true,
+  });
+}
+
+export async function resetPassword(token: string, password: string): Promise<void> {
+  await api('/auth/reset-password', {
+    method: 'POST',
+    body: { token, password },
+    noAuth: true,
+  });
+}

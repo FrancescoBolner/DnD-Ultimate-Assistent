@@ -12,6 +12,7 @@ router.get('/stats', ctrl.getStats);
 router.get('/users', ctrl.getUsers);
 router.patch('/users/:userId/active', ctrl.toggleUserActive);
 router.patch('/users/:userId/admin', ctrl.toggleUserAdmin);
+router.post('/users/:userId/impersonate', ctrl.impersonateUser);
 router.get('/campaigns', ctrl.getCampaigns);
 router.get('/images', ctrl.getImages);
 router.get('/db/export', ctrl.exportDb);

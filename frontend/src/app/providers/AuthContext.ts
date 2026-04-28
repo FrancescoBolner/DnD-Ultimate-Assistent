@@ -14,6 +14,7 @@ export interface AuthState {
     newPassword?: string;
     avatar?: string;
   }) => Promise<void>;
+  impersonateUser: (userId: number) => Promise<void>;
 }
 
 export const AuthContext = createContext<AuthState | null>(null);

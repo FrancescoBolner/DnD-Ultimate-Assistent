@@ -69,6 +69,25 @@ export async function meHandler(req: Request, res: Response, next: NextFunction)
   }
 }
 
+/* ── POST /api/auth/forgot-password ── */
+export async function forgotPasswordHandler(req: Request, res: Response, next: NextFunction) {
+  try {
+    const { email } = req.body as { email?: string };
+    await authService.forgotPassword(email ?? '');
+    // Always return the same message to avoid email enumeration
+    res.json({ message: 'If that email is registered, a reset link has been sent.' });
+  } catch (err) { next(err); }
+}
+
+/* ── POST /api/auth/reset-password ── */
+export async function resetPasswordHandler(req: Request, res: Response, next: NextFunction) {
+  try {
+    const { token, password } = req.body as { token?: string; password?: string };
+    await authService.resetPassword(token ?? '', password ?? '');
+    res.json({ message: 'Password updated successfully.' });
+  } catch (err) { next(err); }
+}
+
 /* ── Cookie helpers ── */
 function cookieOpts() {
   const isProd = process.env.NODE_ENV === 'production';

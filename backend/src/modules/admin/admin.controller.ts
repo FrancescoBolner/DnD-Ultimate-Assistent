@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import * as adminService from './admin.service';
+import * as authService from '../../auth/auth.service';
 import path from 'path';
 import fs from 'fs';
 
@@ -38,6 +39,27 @@ export async function toggleUserAdmin(req: Request, res: Response, next: NextFun
     const { is_admin } = req.body;
     await adminService.toggleUserAdmin(userId, !!is_admin);
     res.json({ message: 'User updated' });
+  } catch (err) { next(err); }
+}
+
+export async function impersonateUser(req: Request, res: Response, next: NextFunction) {
+  try {
+    const targetId = parseInt(req.params.userId as string);
+    const target = await adminService.getUserForImpersonation(targetId);
+    if (!target) {
+      res.status(404).json({ message: 'User not found' });
+      return;
+    }
+    const { tokens } = await authService.impersonateTokens(target.id, target.email);
+    const isProd = process.env.NODE_ENV === 'production';
+    res.cookie('refreshToken', tokens.refreshToken, {
+      httpOnly: true,
+      secure: isProd,
+      sameSite: (isProd ? 'none' : 'lax') as 'none' | 'lax',
+      path: '/api/auth',
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+    });
+    res.json({ user: target, accessToken: tokens.accessToken });
   } catch (err) { next(err); }
 }
 

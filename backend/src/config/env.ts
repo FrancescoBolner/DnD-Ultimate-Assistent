@@ -20,4 +20,15 @@ export const env = {
 
   // CORS
   CORS_ORIGIN: process.env.CORS_ORIGIN || 'http://localhost:5173',
+
+  // SMTP (for password-reset emails)
+  SMTP_HOST:   process.env.SMTP_HOST   || '',
+  SMTP_PORT:   parseInt(process.env.SMTP_PORT || '587', 10),
+  SMTP_SECURE: process.env.SMTP_SECURE === 'true',   // true for port 465
+  SMTP_USER:   process.env.SMTP_USER   || '',
+  SMTP_PASS:   process.env.SMTP_PASS   || '',
+  SMTP_FROM:   process.env.SMTP_FROM   || 'noreply@dnd-assistant.app',
+
+  // Public URL of the frontend (used in reset-password links)
+  APP_URL: process.env.APP_URL || 'http://localhost:5173',
 } as const;

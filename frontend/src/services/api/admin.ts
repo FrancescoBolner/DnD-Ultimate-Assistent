@@ -1,4 +1,5 @@
 import { api, getAccessToken } from './client';
+import type { User } from '../../shared/types';
 
 /* ── Types ── */
 export interface AdminUser {
@@ -51,6 +52,10 @@ export async function toggleUserAdmin(userId: number, isAdmin: boolean): Promise
 
 export async function getCampaigns(page = 1, limit = 50): Promise<{ campaigns: AdminCampaign[]; total: number }> {
   return api(`/admin/campaigns?page=${page}&limit=${limit}`);
+}
+
+export async function impersonateUser(userId: number): Promise<{ user: User; accessToken: string }> {
+  return api<{ user: User; accessToken: string }>(`/admin/users/${userId}/impersonate`, { method: 'POST' });
 }
 
 export interface AdminImage {

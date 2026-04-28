@@ -3,6 +3,8 @@ import type { User } from '../../shared/types';
 import * as authApi from '../../services/api/auth';
 import * as usersApi from '../../services/api/users';
 import * as settingsApi from '../../services/api/settings';
+import * as adminApi from '../../services/api/admin';
+import { setAccessToken } from '../../services/api/client';
 import { DEFAULT_USER_LAYOUT } from '../../services/api/settings';
 import { useIdleLogout } from '../../shared/hooks/useIdleLogout';
 import { AuthContext } from './AuthContext';
@@ -69,10 +71,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setUser(updatedUser);
   }, []);
 
+  const impersonateUser = useCallback(async (userId: number) => {
+    const { user: u, accessToken } = await adminApi.impersonateUser(userId);
+    setAccessToken(accessToken);
+    setUser(u);
+  }, []);
+
   return (
     <AuthContext.Provider value={{
       user, authLoading, authError,
-      loginUser, registerUser, logout, updateProfile,
+      loginUser, registerUser, logout, updateProfile, impersonateUser,
     }}>
       {children}
     </AuthContext.Provider>

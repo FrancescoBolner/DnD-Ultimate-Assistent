@@ -1,6 +1,7 @@
 import { createBrowserRouter, Navigate } from 'react-router-dom';
 import MainLayout from '../../shared/layout/MainLayout';
 import LoginPage from '../../pages/Login/login';
+import ResetPasswordPage from '../../pages/Login/ResetPassword';
 import DashboardPage from '../../pages/Dashboard/Dashboard';
 import HomePage from '../../pages/Home/Home';
 import AdminPage from '../../pages/Admin/Admin';
@@ -11,6 +12,10 @@ export const router = createBrowserRouter([
   {
     path: '/login',
     element: <LoginPage />,
+  },
+  {
+    path: '/reset-password',
+    element: <ResetPasswordPage />,
   },
   {
     path: '/home',

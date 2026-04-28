@@ -1,6 +1,6 @@
 import {
   Settings, Home, BookOpen, Pencil, PanelLeft, PanelLeftClose, LogOut, Swords,
-  LayoutDashboard, Minimize2,
+  LayoutDashboard, Minimize2, Shield,
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useApp }      from '../../../app/providers/useApp';
@@ -58,6 +58,14 @@ export default function TopBar({ variant = 'dashboard', onUserClick }: TopBarPro
         </div>
         <div className="topbar__right">
           {userPill}
+          {!!user?.is_admin && (
+            <Button
+              variant="ghost" size="sm"
+              icon={<Shield size={14} />}
+              onClick={() => navigate('/admin')}
+              title="Admin panel"
+            />
+          )}
           <Button
             variant="ghost" size="sm"
             icon={<LogOut size={14} />}

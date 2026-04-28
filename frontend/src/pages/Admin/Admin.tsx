@@ -1,10 +1,11 @@
 import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   Shield, Users, Swords, BarChart3, UserCheck, UserX,
   ShieldCheck, ShieldOff, Search, Copy, Check, FolderOpen,
   ChevronUp, ChevronDown, ArrowUpDown, Image as ImageIcon, X,
   Database, Download, Upload, AlertCircle, CheckCircle2,
-  LayoutGrid, List, Music, FileQuestion,
+  LayoutGrid, List, Music, FileQuestion, LogIn,
 } from 'lucide-react';
 import { useAuth } from '../../app/providers/useAuth';
 import * as adminApi from '../../services/api/admin';
@@ -70,7 +71,8 @@ function useCopy() {
 
 /* ════════════════════════════════════════════════════════════ */
 export default function AdminPage() {
-  const { user } = useAuth();
+  const { user, impersonateUser } = useAuth();
+  const navigate = useNavigate();
   const [tab, setTab] = useState<Tab>('stats');
 
   if (!user?.is_admin) {
@@ -103,7 +105,7 @@ export default function AdminPage() {
 
       <div className="admin__body">
         {tab === 'stats'     && <StatsPanel />}
-        {tab === 'users'     && <UsersPanel currentUserId={user.id} />}
+        {tab === 'users'     && <UsersPanel currentUserId={user.id} impersonateUser={async (id) => { await impersonateUser(id); navigate('/home'); }} />}
         {tab === 'campaigns' && <CampaignsPanel />}
         {tab === 'images'    && <ImagesPanel />}
         {tab === 'database'  && <DatabasePanel />}
@@ -156,7 +158,7 @@ function SortBtn<T>({ col, sortKey, sortDir, onSort }: {
 }
 
 /* ── Users Panel ── */
-function UsersPanel({ currentUserId }: { currentUserId: number }) {
+function UsersPanel({ currentUserId, impersonateUser }: { currentUserId: number; impersonateUser: (id: number) => Promise<void> }) {
   const [users, setUsers] = useState<AdminUser[]>([]);
   const [total, setTotal] = useState(0);
   const [page, setPage] = useState(1);
@@ -240,6 +242,7 @@ function UsersPanel({ currentUserId }: { currentUserId: number }) {
               <th>Status <SortBtn<AdminUser> col="is_active" sortKey={sortKey} sortDir={sortDir} onSort={handleSort} /></th>
               <th>Created <SortBtn<AdminUser> col="created_at" sortKey={sortKey} sortDir={sortDir} onSort={handleSort} /></th>
               <th>Actions</th>
+              <th>Log as</th>
             </tr>
           </thead>
           <tbody>
@@ -260,7 +263,7 @@ function UsersPanel({ currentUserId }: { currentUserId: number }) {
                 </td>
                 <td>{new Date(u.created_at).toLocaleDateString()}</td>
                 <td className="admin__actions">
-                  {u.id !== currentUserId && (
+                  {u.id !== currentUserId ? (
                     <>
                       <button className="admin__action-btn" onClick={() => toggleActive(u)}
                         title={u.is_active ? 'Deactivate' : 'Activate'}>
@@ -271,6 +274,19 @@ function UsersPanel({ currentUserId }: { currentUserId: number }) {
                         {u.is_admin ? <ShieldOff size={13} /> : <ShieldCheck size={13} />}
                       </button>
                     </>
+                  ) : (
+                    <button className="admin__action-btn" style={{opacity : 0}}></button>
+                  )}
+                </td>
+                <td>
+                  {u.id !== currentUserId && !u.is_admin && (
+                    <button
+                      className="admin__action-btn admin__action-btn--impersonate"
+                      title={`Log as ${u.username}`}
+                      onClick={() => impersonateUser(u.id)}
+                    >
+                      <LogIn size={13} />
+                    </button>
                   )}
                 </td>
               </tr>

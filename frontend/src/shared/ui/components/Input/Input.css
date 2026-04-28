@@ -43,6 +43,41 @@
   color: var(--color-danger);
 }
 
+/* ── Suffix (e.g. show/hide password button) ── */
+.input-group__wrap {
+  display: contents;
+}
+.input-group__wrap--suffix {
+  display: flex;
+  position: relative;
+}
+.input-group__wrap--suffix .input-group__input {
+  flex: 1;
+  padding-right: 36px;
+}
+.input-group__suffix {
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  padding: 0 8px;
+}
+.input-group__suffix button {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  color: var(--color-text-muted);
+  display: flex;
+  align-items: center;
+  line-height: 1;
+}
+.input-group__suffix button:hover {
+  color: var(--color-text);
+}
+
 .field-required {
   color: var(--color-danger);
   margin-left: 2px;

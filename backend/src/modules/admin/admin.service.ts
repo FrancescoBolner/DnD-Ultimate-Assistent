@@ -65,6 +65,14 @@ export async function toggleUserAdmin(userId: number, isAdmin: boolean): Promise
   );
 }
 
+export async function getUserForImpersonation(userId: number): Promise<AdminUser | null> {
+  const [rows] = await pool.execute<RowDataPacket[]>(
+    'SELECT id, email, username, avatar, is_admin, is_active, created_at FROM users WHERE id = ?',
+    [userId],
+  );
+  return rows.length ? (rows[0] as AdminUser) : null;
+}
+
 /* ── Campaigns ── */
 
 export async function listCampaigns(page = 1, limit = 50): Promise<{ campaigns: AdminCampaign[]; total: number }> {

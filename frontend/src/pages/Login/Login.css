@@ -73,3 +73,19 @@
   margin: 0;
   text-align: center;
 }
+.login__error--ok {
+  background: var(--color-success-dim, color-mix(in srgb, var(--color-accent) 15%, transparent));
+  color: var(--color-success, var(--color-accent));
+  border-color: color-mix(in srgb, var(--color-accent) 30%, transparent);
+}
+
+/* ── Forgot password ── */
+
+/* ── Subtitle (reset-password page) ── */
+.login__subtitle {
+  text-align: center;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-text);
+  margin: 0 0 4px;
+}
